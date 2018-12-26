@@ -78,22 +78,5 @@ class EmpSpe(models.Model):
 	
 class NoeudSpe(models.Model):
 	noeud = models.ForeignKey(Noeud, on_delete=models.CASCADE)
-	specialite = models.ForeignKey(Patient, on_delete=models.CASCADE)
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	specialite = models.ForeignKey(Patient, on_delete=models.CASCADE)	
 	

@@ -64,7 +64,28 @@ class BDD(object):
 		return x
 		
 	def _createX(self, typeX, **kwargs):
-		pass
+		"""Méthode interne gérant les 3 types de create voulus."""
+		if typeX not in (self.TYPE_DOCUMENT, self.TYPE_PERSONNE, self.TYPE_NOEUD):
+			raise ValueError("Le paramètre typeX doit être égal à une des 3 contantes de type")
+		
+		if typeX == self.TYPE_DOCUMENT:
+			obj = Document
+		
+		elif typeX == self.TYPE_PERSONNE:
+			obj = Personne
+		
+		else:
+			obj = Noeud
+			if not ("nom" in kwargs and "typ" in kwargs and "pere" in kwargs and "boss" in kwargs):
+				raise ValueError("Kwargs de createX pour Noeud mauvais.")
+
+			try:
+				result = obj.objects.create(nom=kwargs["nom"], typ=kwargs["typ"], pere=kwargs["pere"], boss=kwargs["boss"])
+			except:
+				result = None
+
+		return result
+
 	
 	def getDocument(self, id):
 		"""Renvoie le document correspondant à l'id donné en paramètre ou None s'il n'est pas dans la BDD"""

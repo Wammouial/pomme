@@ -34,7 +34,7 @@ class PathAndRename(object):
 
 class Noeud(models.Model):
 	nom = models.CharField(max_length=255)
-	type = models.IntegerField(choices=TYPES_NOEUD, default=2)
+	typ = models.IntegerField(choices=TYPES_NOEUD, default=2)
 	pere = models.ForeignKey("Noeud", on_delete=models.CASCADE)
 	boss = models.ForeignKey("Employe", on_delete=models.SET_NULL, null=True)
 

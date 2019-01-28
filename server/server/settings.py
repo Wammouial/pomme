@@ -89,9 +89,15 @@ DATABASES = {
     }
 }
 
+"""
+CREATE USER 'django_delire'@'localhost' IDENTIFIED VIA mysql_native_password USING '***';GRANT USAGE ON *.* TO 'django_delire'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;CREATE DATABASE IF NOT EXISTS `django_delire`;GRANT ALL PRIVILEGES ON `django\_delire`.* TO 'django_delire'@'localhost';
+"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = "delire.Personne"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

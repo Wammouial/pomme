@@ -46,7 +46,7 @@ class BDD(object):
 		if personne is None:
 			return None
 			
-		return JOBS[personne][1]
+		return JOBS[personne.job][1]
 		
 	def _getX(self, idX, typeX):
 		"""Méthode interne gérant les 3 types de get voulus. Renvoie l'objet voulu ou None si erreur."""
@@ -59,9 +59,9 @@ class BDD(object):
 			obj = Personne
 		else:
 			obj = Noeud
-			
+		
 		try:
-			x = obj.objects.get(idX)
+			x = obj.objects.get(id=idX)
 		except:
 			x = None
 		
@@ -78,21 +78,19 @@ class BDD(object):
 				raise ValueError("Kwargs de createX pour Document mauvais.")
 				
 			try:
-				result = obj.objects.create(nom=kwargs["nom"], date=kwargs["date"], brouillon=kwargs["brouillon"], fichier=kwargs["fichier"],
-											typeDoc=kwargs["typeDoc"], proprietaire=kwargs["proprietaire"])
+				result = obj.objects.create(**kwargs)
 			except Exception as e:
 				raise ValueError("Parametres de l'objet à créer invalides : " + repr(e))
 		
 		elif typeX == self.TYPE_PERSONNE:
 			obj = Personne
 			if not ("nom" in kwargs and "prenom" in kwargs and "dateNaissance" in kwargs and "lieuNaissance" in kwargs and "telephone" in kwargs \
-					and "situationFamiliale" in kwargs and "mail" in kwargs and "adresse" in kwargs and "linkedTo" in kwargs):
+					and "situationFamiliale" in kwargs and "email" in kwargs and "adresse" in kwargs and "linkedTo" in kwargs):
 				raise ValueError("Kwargs de createX pour Personne mauvais.")
 			
 			try:
-				result = obj.objects.create(nom=kwargs["nom"], prenom=kwargs["prenom"], dateNaissance=kwargs["dateNaissance"], lieuNaissance=kwargs["lieuNaissance"],
-											telephone=kwargs["telephone"], situationFamiliale=kwargs["situationFamiliale"], mail=kwargs["mail"],
-											adresse=kwargs["adresse"], linkedTo=kwargs["linkedTo"])
+				email = kwargs.pop("email")
+				result = obj.objects.create_user(email, **kwargs)
 			except Exception as e:
 				raise ValueError("Parametres de l'objet à créer invalides : " + str(e))
 		
@@ -102,29 +100,17 @@ class BDD(object):
 				raise ValueError("Kwargs de createX pour Noeud mauvais.")
 
 			try:
-				result = obj.objects.create(nom=kwargs["nom"], typ=kwargs["typ"], pere=kwargs["pere"], boss=kwargs["boss"])
+				result = obj.objects.create(**kwargs)
 			
 			except Exception as e:
 				raise ValueError("Parametres de l'objet à créer invalides : " + repr(e))
 
 		return result
 		
-	def _updateX(self, typeX, idX, **kwargs):
+	def _updateX(self, x, **kwargs):
 		"""Méthode interne gérant les 3 types de update voulus."""
-		if typeX not in (self.TYPE_DOCUMENT, self.TYPE_PERSONNE, self.TYPE_NOEUD):
-			raise ValueError("Le paramètre typeX doit être égal à une des 3 contantes de type")
-		
-		if typeX == self.TYPE_DOCUMENT:
-			obj = Document
-		elif typeX == self.TYPE_PERSONNE:
-			obj = Personne
-		else:
-			obj = Noeud
-			
-		try:
-			x = obj.objects.get(idX)
-		except:
-			raise ValueError("idX ne correspond à aucun objet")
+		if type(x) not in (Document, Personne, Noeud):
+			raise ValueError("Le paramètre x doit être un objet d'un des 3 types")
 		
 		for k in kwargs.keys():
 			if not hasattr(x, k):
@@ -169,15 +155,39 @@ class BDD(object):
 	
 	
 	
-	def updateDocument(self, id, **kwargs):
+	def updateDocument(self, doc, **kwargs):
 		"""Lève une ValueError si l'update n'a pas marché"""
-		return self._updateX(self.TYPE_DOCUMENT, id, **kwargs)
+		return self._updateX(doc, **kwargs)
 		
-	def updatePersonne(self, id, **kwargs):
+	def updatePersonne(self, personne, **kwargs):
 		"""Lève une ValueError si l'update n'a pas marché"""
-		return self._updateX(self.TYPE_PERSONNE, id, **kwargs)
+		return self._updateX(personne, **kwargs)
 		
-	def updateNoeud(self, id, **kwargs):
+	def updateNoeud(self, noeud, **kwargs):
 		"""Lève une ValueError si l'update n'a pas marché"""
-		return self._updateX(self.TYPE_NOEUD, id, **kwargs)
+		return self._updateX(noeud, **kwargs)
+		
+	
+	
+	def getNameNoeud(self, idNoeud):
+		"""Renvoie le nom du noeud correspondant à idNoeud"""
+		try:
+			return Noeud.objects.get(idNoeud).nom
+		except:
+			raise ValueError("idNoeud ne correspond à aucun noeud")
+	
+	def saveNoeudPersonne(idNoeud, idPersonne):
+		"""Associe un noeud à une personne même si cette personne est déjà associée à un noeud"""
+		try:
+			n = Noeud.objects.get(idNoeud)
+			p = Personne.objects.get(idPersonne)
+		except:
+			raise ValueError("Un des id passé en paramètre ne correspond à rien")
+			
+		try:
+			self.updatePersonne(p, linkedTo=n)
+		except:
+			raise RuntimeError("Impossible d'update linkedTo")
+	
+	
 	

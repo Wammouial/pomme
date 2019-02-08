@@ -48,7 +48,7 @@ class BDD(object):
 			
 		return JOBS[personne.job][1]
 		
-	def _getX(self, idX, typeX):
+	def _getX(self, typeX, typeX):
 		"""Méthode interne gérant les 3 types de get voulus. Renvoie l'objet voulu ou None si erreur."""
 		if typeX not in (self.TYPE_DOCUMENT, self.TYPE_PERSONNE, self.TYPE_NOEUD):
 			raise ValueError("Le paramètre typeX doit être égal à une des 3 contantes de type")
@@ -63,6 +63,33 @@ class BDD(object):
 		try:
 			x = obj.objects.get(id=idX)
 		except:
+			x = None
+		
+		return x
+		
+	def _getAllX(self, typeX, nResults=-1, **kwargs):
+		"""Méthode interne gérant getAll pour les 3 types"""
+		if typeX not in (self.TYPE_DOCUMENT, self.TYPE_PERSONNE, self.TYPE_NOEUD):
+			raise ValueError("Le paramètre typeX doit être égal à une des 3 contantes de type")
+		
+		if typeX == self.TYPE_DOCUMENT:
+			obj = Document
+		elif typeX == self.TYPE_PERSONNE:
+			obj = Personne
+		else:
+			obj = Noeud
+			
+		try:
+			if len(kwargs) > 0:	
+				x = obj.objects.filter(**kwargs)
+			else:
+				x = obj.objects.all()
+			
+			if nResults >= 0:
+				x = x[:nResults]
+		
+		except Exception as e:
+			print("Erreur de getAllX : {}".format(str(e)))
 			x = None
 		
 		return x
@@ -125,21 +152,58 @@ class BDD(object):
 			x.save(update_fields=kwargs.keys())
 		except:
 			raise ValueError("Erreur dans une des nouvelles valeur de l'objet")
+			
+	def _deleteX(self, typeX, idX):
+		"""Delete l'objet de type et d'id spécifié"""
+		if typeX not in (self.TYPE_PERSONNE, self.TYPE_NOEUD):
+			raise ValueError("Le paramètre typeX doit être égal à une des 2 contantes de type")
+		
+		if typeX == self.TYPE_PERSONNE:
+			obj = Personne
+		else:
+			obj = Noeud
+		
+		try:
+			x = obj.objects.get(idX)
+		except:
+			return False
+		
+		try:
+			x.delete()
+		except:
+			print("protec fdp")
+			return False
+		
+		return True
 
 	
 	def getDocument(self, id):
 		"""Renvoie le document correspondant à l'id donné en paramètre ou None s'il n'est pas dans la BDD"""
-		return self._getX(id, self.TYPE_DOCUMENT)
+		return self._getX(self.TYPE_DOCUMENT, id)
 		
 	def getPersonne(self, id):
 		"""Renvoie la personne correspondant à l'id donné en paramètre ou None si elle n'est pas dans la BDD"""
-		return self._getX(id, self.TYPE_PERSONNE)
+		return self._getX(self.TYPE_PERSONNE, id)
 		
 	def getNoeud(self, id):
 		"""Renvoie le noeud correspondant à l'id donné en paramètre ou None s'il n'est pas dans la BDD"""
-		return self._getX(id, self.TYPE_NOEUD)
+		return self._getX(self.TYPE_NOEUD, id)
 		
-	
+	def getAllDocument(self, nResults=-1, **kwargs):
+		"""Renvoie tous les documents de la BDD, si nResults <= 0 renvoie tout sinon renvoie nResults éléments
+		   kwargs permet de spécifier des options de filtrage"""
+		return self._getAllX(self.TYPE_DOCUMENT, nResults, **kwargs)
+		
+	def getAllPersonne(self, nResults=-1, **kwargs):
+		"""Renvoie toutes les personnes de la BDD, si nResults <= 0 renvoie tout sinon renvoie nResults éléments
+		   kwargs permet de spécifier des options de filtrage"""
+		return self._getAllX(self.TYPE_PERSONNE, nResults, **kwargs)
+		
+	def getAllNoeud(self, nResults=-1, **kwargs):
+		"""Renvoie tous les noeuds de la BDD, si nResults <= 0 renvoie tout sinon renvoie nResults éléments
+		   kwargs permet de spécifier des options de filtrage"""
+		return self._getAllX(self.TYPE_NOEUD, nResults, **kwargs)
+		
 	
 	def createDocument(self, **kwargs):
 		"""Renvoie le document créé si ça a marché ou None si il y a eu un problème"""
@@ -152,7 +216,6 @@ class BDD(object):
 	def createNoeud(self, **kwargs):
 		"""Renvoie le noeud créé si ça a marché ou None si il y a eu un problème"""
 		return self._createX(self.TYPE_NOEUD, **kwargs)
-	
 	
 	
 	def updateDocument(self, doc, **kwargs):
@@ -168,6 +231,15 @@ class BDD(object):
 		return self._updateX(noeud, **kwargs)
 		
 	
+	def deletePersonne(self, id):
+		"""Supprime si possible la personne correspondant à cet id"""
+		return self._deleteX(self.TYPE_PERSONNE, id)
+		
+	def deleteNoeud(self, id):
+		"""Supprime si possible le noeud correspondant à cet id"""
+		return self._deleteX(self.TYPE_NOEUD, id)
+	
+	
 	
 	def getNameNoeud(self, idNoeud):
 		"""Renvoie le nom du noeud correspondant à idNoeud"""
@@ -176,7 +248,7 @@ class BDD(object):
 		except:
 			raise ValueError("idNoeud ne correspond à aucun noeud")
 	
-	def saveNoeudPersonne(idNoeud, idPersonne):
+	def saveNoeudPersonne(self, idNoeud, idPersonne):
 		"""Associe un noeud à une personne même si cette personne est déjà associée à un noeud"""
 		try:
 			n = Noeud.objects.get(idNoeud)
@@ -188,6 +260,8 @@ class BDD(object):
 			self.updatePersonne(p, linkedTo=n)
 		except:
 			raise RuntimeError("Impossible d'update linkedTo")
+			
+	
 	
 	
 	

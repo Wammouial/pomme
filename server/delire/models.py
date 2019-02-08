@@ -65,7 +65,7 @@ class Noeud(models.Model):
 	nom = models.CharField(max_length=255)
 	typ = models.IntegerField(choices=TYPES_NOEUD, default=2)
 	pere = models.ForeignKey("Noeud", on_delete=models.CASCADE)	 #selfRef
-	boss = models.ForeignKey("Personne", on_delete=models.SET_NULL, null=True)
+	boss = models.ForeignKey("Personne", on_delete=models.PROTECT, null=True)
 
 class Personne(AbstractBaseUser, PermissionsMixin):
 	email = models.EmailField(max_length=255, unique=True)
@@ -84,7 +84,7 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 	objects = UserManager()
 	
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['email']
+	REQUIRED_FIELDS = []
 	
 	class Meta:
 		verbose_name = 'personne'
@@ -110,7 +110,7 @@ class Document(models.Model):
 	brouillon = models.BooleanField(default=True)
 	fichier = models.FileField(upload_to=PathAndRename('documents/'), max_length=200)
 	typeDoc = models.CharField(max_length=255)
-	proprietaire = models.ForeignKey(Personne, on_delete=models.CASCADE)
+	proprietaire = models.ForeignKey(Personne, on_delete=models.PROTECT)
 	
 class Ecrit(models.Model):
 	employe = models.ForeignKey(Personne, on_delete=models.CASCADE)

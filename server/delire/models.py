@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-from django.utils.deconstruct import deconstructible
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
@@ -24,18 +23,6 @@ JOBS = (
 	(4, "Médecin"),
 )
 
-@deconstructible
-class PathAndRename(object):
-	"""Renommer un fichier avant de l'enregistrer."""
-
-	def __init__(self, sub_path):
-		self.path = sub_path
-
-	def __call__(self, instance, filename):
-		ext = filename.split('.')[-1]
-		filename = '{}.{}'.format(uuid4().hex, ext)
-
-		return os.path.join(self.path, filename)
 		
 class UserManager(BaseUserManager):
 	use_in_migrations = True
@@ -108,7 +95,7 @@ class Document(models.Model):
 	nom = models.CharField(max_length=255)
 	date = models.DateField()
 	brouillon = models.BooleanField(default=True)
-	fichier = models.FileField(upload_to=PathAndRename('documents/'), max_length=200)
+	fichier = models.TextField()
 	typeDoc = models.CharField(max_length=255)
 	proprietaire = models.ForeignKey(Personne, on_delete=models.PROTECT)
 	

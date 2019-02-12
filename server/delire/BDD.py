@@ -26,7 +26,7 @@ class BDD(object):
 		""" Décode le paramètre dataEnc de type bin encodé en base64."""
 		
 		if type(dataEnc) != bytes:
-			raise ValueError("Le paramètre dataStr doit être de type bytes")
+			raise ValueError("Le paramètre dataEnc doit être de type bytes")
 		
 		return base64.b64decode(dataEnc)
 		
@@ -48,7 +48,7 @@ class BDD(object):
 			
 		return JOBS[personne.job][1]
 		
-	def _getX(self, typeX, typeX):
+	def _getX(self, typeX, idX):
 		"""Méthode interne gérant les 3 types de get voulus. Renvoie l'objet voulu ou None si erreur."""
 		if typeX not in (self.TYPE_DOCUMENT, self.TYPE_PERSONNE, self.TYPE_NOEUD):
 			raise ValueError("Le paramètre typeX doit être égal à une des 3 contantes de type")

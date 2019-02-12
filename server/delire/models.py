@@ -51,7 +51,7 @@ class UserManager(BaseUserManager):
 class Noeud(models.Model):
 	nom = models.CharField(max_length=255)
 	typ = models.IntegerField(choices=TYPES_NOEUD, default=2)
-	pere = models.ForeignKey("Noeud", on_delete=models.CASCADE)	 #selfRef
+	pere = models.ForeignKey("Noeud", on_delete=models.CASCADE, null=True)	 #selfRef
 	boss = models.ForeignKey("Personne", on_delete=models.PROTECT, null=True)
 
 class Personne(AbstractBaseUser, PermissionsMixin):
@@ -59,9 +59,9 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 	nom = models.CharField(max_length=255)
 	prenom = models.CharField(max_length=255)
 	dateNaissance = models.DateField()
-	lieuNaissance = models.CharField(max_length=500)
-	telephone = models.CharField(max_length=14)
-	situationFamiliale = models.CharField(max_length=100)
+	lieuNaissance = models.CharField(max_length=500, null=True)
+	telephone = models.CharField(max_length=14, null=True)
+	situationFamiliale = models.CharField(max_length=100, null=True)
 	adresse = models.CharField(max_length=500)
 	linkedTo = models.ForeignKey(Noeud, on_delete=models.SET_NULL, null=True)
 	job = models.IntegerField(choices=JOBS, default=0)

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+
 from .BDD import BDD
 from .forms import ContactForm
 
@@ -37,3 +37,8 @@ def rep(request):
         <h1>Bienvenue sur Pomme</h1>
         <p>Ici c'est la réponse pour le formulaire du patient</p>
         """)
+
+
+	
+
+		

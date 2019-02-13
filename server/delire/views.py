@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from BDD import BDD
+from .BDD import BDD
 from .forms import ContactForm
 
 # Create your views here.

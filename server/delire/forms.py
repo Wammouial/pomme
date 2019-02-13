@@ -1,24 +1,40 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from django import forms
-import datetime
 
-class PatientForm(forms.Form):  #formulaire patient modèle ?
-    CHOICES=[('select1','F'),
-         ('select2','M')]
-    nom = forms.CharField(max_length=100)
-    prenom = forms.CharField(max_length=100)
-    sexe = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    date_de_naissance = forms.DateField(initial=datetime.date.today)
-    numéro_de_securité_sociale = forms.CharField(max_length=100)
-    numéro = forms.CharField(max_length=3)
-    libellé = forms.CharField(max_length=70)
-    code_postal = forms.CharField(max_length=5)
-    ville = forms.CharField(max_length=100)
-    #message = forms.CharField(widget=forms.Textarea)
-    adresse_email = forms.EmailField(label="Adresse e-mail")
-    nationalité = forms.CharField(max_length=30)
-    numéro_de_téléphone = forms.CharField(max_length=10)
-    situation_familiale = forms.CharField(max_length=70)
-    #renvoi = forms.BooleanField(help_text="Cochez si vous souhaitez obtenir une copie du mail envoyé.", required=False)
+from django.db import models
+from django.forms import ModelForm
 
+CHOICES=[('select1','Féminin'),
+         ('select2','Masculin')]
+
+class Profil(models.Model):  #formulaire patient modèle ?
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    sexe = models.CharField(max_length=2, choices=CHOICES)
+    date_de_naissance = models.DateField(blank=True, null=True)
+    numéro_de_sécurité_sociale = models.CharField(max_length=100)
+    numéro = models.CharField(max_length=3)
+    libellé = models.CharField(max_length=70)
+    code_postal = models.CharField(max_length=5)
+    ville = models.CharField(max_length=100)
+    adresse_email = models.EmailField(max_length=70)
+    nationalité = models.CharField(max_length=30)
+    numéro_de_téléphone = models.CharField(max_length=10)
+    situation_familiale = models.CharField(max_length=70)
+    
+class PatientForm(ModelForm):
+    class Meta:
+        model = Profil
+        fields = ['nom',
+                  'prenom',
+                  'date_de_naissance',
+                  'sexe',
+                  'numéro_de_sécurité_sociale',
+                  'numéro',
+                  'libellé',
+                  'code_postal',
+                  'ville',
+                  'adresse_email',
+                  'nationalité',
+                  'numéro_de_téléphone',
+                  'situation_familiale']

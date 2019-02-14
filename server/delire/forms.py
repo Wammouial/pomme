@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from django.db import models
 from django.forms import ModelForm
 
+from .models import Personne
+
+# Je te laisse supprimer ça, ça fait mal de supprimer tout ce travail
+"""
 CHOICES=[('select1','Féminin'),
          ('select2','Masculin')]
 
@@ -21,20 +24,19 @@ class Profil(models.Model):  #formulaire patient modèle ?
     nationalité = models.CharField(max_length=30)
     numéro_de_téléphone = models.CharField(max_length=10)
     situation_familiale = models.CharField(max_length=70)
-    
+   
+"""
+
 class PatientForm(ModelForm):
     class Meta:
-        model = Profil
-        fields = ['nom',
-                  'prenom',
-                  'date_de_naissance',
-                  'sexe',
-                  'numéro_de_sécurité_sociale',
-                  'numéro',
-                  'libellé',
-                  'code_postal',
-                  'ville',
-                  'adresse_email',
-                  'nationalité',
-                  'numéro_de_téléphone',
-                  'situation_familiale']
+        model = Personne
+        fields = ['email',
+				  'nom',
+				  'prenom',
+				  'dateNaissance',
+				  'lieuNaissance',
+				  'telephone',
+				  'situationFamiliale',
+				  'adresse',
+				  'numSS',
+				  ]

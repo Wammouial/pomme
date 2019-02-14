@@ -19,6 +19,6 @@ from . import views
 
 urlpatterns = [
     path('formpatient', views.form), #provisoire
-    path('reppatient', views.rep), #provisoire
+    path('reppatient', views.recherche), #provisoire
 	path('afficheDocuments/<int:pid>', views.afficheDocuments),
 ]

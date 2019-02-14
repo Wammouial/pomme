@@ -36,13 +36,16 @@ def form(request): #formulaire patient
     else:
         form = PatientForm()
     
-    return render(request, 'patient.html', {'form': form})
+    return render(request, 'formulairepatient.html', {'form': form})
 
-def rep(request):
+def recherche(request):
     return HttpResponse("""
         <h1>Bienvenue sur Pomme</h1>
-        <p>Ici c'est la réponse pour le formulaire du patient</p>
+        <p>Recherche d'un dossier patient</p>
         """)
+		
+def rep(request): # Sinon runserver marche pas avec urls.py
+	pass
 		
 
 #DMP
@@ -74,4 +77,4 @@ def editDocument(request, did=""):
 		raise Http404
 		
 	if request.method == "POST":
-		
+		pass #A suivre

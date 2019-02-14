@@ -56,6 +56,7 @@ class Noeud(models.Model):
 
 class Personne(AbstractBaseUser, PermissionsMixin):
 	email = models.EmailField(max_length=255, unique=True)
+	sexe = models.BooleanField(default=True)  # True pour femme (car plus de femmes dans le monde)
 	nom = models.CharField(max_length=255)
 	prenom = models.CharField(max_length=255)
 	dateNaissance = models.DateField()

@@ -112,7 +112,7 @@ class BDD(object):
 		elif typeX == self.TYPE_PERSONNE:
 			obj = Personne
 			if not ("nom" in kwargs and "prenom" in kwargs and "dateNaissance" in kwargs and "lieuNaissance" in kwargs and "telephone" in kwargs \
-					and "situationFamiliale" in kwargs and "email" in kwargs and "adresse" in kwargs and "linkedTo" in kwargs):
+					and "situationFamiliale" in kwargs and "email" in kwargs and "adresse" in kwargs and "linkedTo" in kwargs and "sexe" in kwargs):
 				raise ValueError("Kwargs de createX pour Personne mauvais.")
 			
 			try:

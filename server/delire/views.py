@@ -55,7 +55,7 @@ def afficheDocuments(request, pid=""):
 		raise Http404
 		
 	documents = b.getAllDocument(proprietaire=personne)
-	if documents is None:
+	if documents is None or len(documents) == 0:
 		return HttpResponse("<p>Aucun document pour cette personne</p>")
 		
 	result = "<ul>\n"
@@ -64,3 +64,14 @@ def afficheDocuments(request, pid=""):
 	result += "</ul>"
 	
 	return HttpResponse(result)
+	
+def editDocument(request, did=""):
+	"""Toujours pas de template"""
+	b = BDD()
+	
+	doc = b.getDocument(did)
+	if doc is None:
+		raise Http404
+		
+	if request.method == "POST":
+		

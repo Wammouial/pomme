@@ -33,6 +33,7 @@ class PatientForm(ModelForm):
         fields = ['email',
 				  'nom',
 				  'prenom',
+                  'sexe',
 				  'dateNaissance',
 				  'lieuNaissance',
 				  'telephone',

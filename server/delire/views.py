@@ -30,7 +30,6 @@ def form(request): #formulaire patient
             #message = form.cleaned_data['message']
         
         # Quoiqu'il arrive, on affiche la page du formulaire.
-        #return render(request, 'PommeApp/templates/template1.py', locals())
         return HttpResponseRedirect('/thanks/')
     # if a GET (or any other method) we'll create a blank form
     else:

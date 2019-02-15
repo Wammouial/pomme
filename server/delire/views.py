@@ -9,29 +9,21 @@ from .forms import PatientForm
 def form(request): #formulaire patient
     if request.method == 'POST':
         form = PatientForm(request.POST)
-        # Nous vérifions que les données envoyées sont valides
-        # Cette méthode renvoie False s'il n'y a pas de données
-        # dans le formulaire ou qu'il contient des erreurs.
+
         if form.is_valid():
-            # Ici nous pouvons traiter les données du formulaire
             nom = form.cleaned_data['nom']
             prenom = form.cleaned_data['prenom']
             sexe = form.cleaned_data['sexe']
-            date_de_naissance = form.cleaned_data['date_de_naissance']
-            numéro_de_securité_sociale = form.cleaned_data['numéro_de_securité_sociale']
-            numéro = form.cleaned_data['numéro']
-            libellé = form.cleaned_data['libellé']
-            code_postal = form.cleaned_data['code_postal']
-            ville = form.cleaned_data['ville']
-            adresse_email = form.cleaned_data['adresse_email']
-            nationalité = form.cleaned_data['nationalité']
-            numéro_de_téléphone = form.cleaned_data['numéro_de_téléphone']
-            situation_familiale = form.cleaned_data['situation_familiale']
-            #message = form.cleaned_data['message']
-        
-        # Quoiqu'il arrive, on affiche la page du formulaire.
+            date_de_naissance = form.cleaned_data['dateNaissance']
+            lieu_de_naissance = form.cleaned_data['lieuNaissance']
+            numéro_de_SS = form.cleaned_data['numSS']
+            adresse= form.cleaned_data['adresse']
+            adresse_email = form.cleaned_data['email']
+            téléphone = form.cleaned_data['telephone']
+            situation_familiale = form.cleaned_data['situationFamiliale']
+
         return HttpResponseRedirect('/thanks/')
-    # if a GET (or any other method) we'll create a blank form
+
     else:
         form = PatientForm()
     

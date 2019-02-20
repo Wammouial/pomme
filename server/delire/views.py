@@ -21,13 +21,15 @@ def form(request): #formulaire patient
             adresse_email = form.cleaned_data['email']
             téléphone = form.cleaned_data['telephone']
             situation_familiale = form.cleaned_data['situationFamiliale']
-
-        return HttpResponseRedirect('/thanks/')
+            
+            
+        print(form.cleaned_data)
+        return render(request, 'recherchepatient.html', locals())
 
     else:
         form = PatientForm()
     
-    return render(request, 'formulairepatient.html', {'form': form})
+    return render(request, 'formulairepatient.html', {'form' : form})
 
 def recherche(request):
     return HttpResponse("""
@@ -41,8 +43,8 @@ def rep(request): # Sinon runserver marche pas avec urls.py
 
 #DMP
 def afficheDocuments(request, pid=""):
-	"""Pour l'instant car pas de template"""
-	b = BDD()
+	#Pour l'instant car pas de template
+	"""b = BDD()
 	
 	personne = b.getPersonne(pid)
 	if personne is None:
@@ -57,11 +59,11 @@ def afficheDocuments(request, pid=""):
 		result += "<li>" + doc.nom + "</li>\n"
 	result += "</ul>"
 	
-	return HttpResponse(result)
+	return HttpResponse(result)"""
 	
 def editDocument(request, did=""):
-	"""Toujours pas de template"""
-	b = BDD()
+	#Toujours pas de template
+	"""b = BDD()
 	
 	doc = b.getDocument(did)
 	if doc is None:
@@ -69,3 +71,4 @@ def editDocument(request, did=""):
 		
 	if request.method == "POST":
 		pass #A suivre
+    """

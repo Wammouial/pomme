@@ -1,0 +1,48 @@
+.section-main{
+	border:solid 2px whitesmoke;
+	padding: 3%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	background-color:white;
+}
+
+.top-menu__infos{
+	font-weight: 600;
+	color: initial;
+	font-size: 1.4rem;
+	margin-right: 5%;
+}
+.top-menu__btns{
+	width: 50%;
+}
+.menu{
+	background-color: whitesmoke;
+	padding: 2%;
+}
+.menu .btn{
+	margin-right: 2%;
+}
+
+
+.section-form{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 4%;
+	background-color: #f4fdff;
+}
+
+.form-login{
+	width: 60%;
+	border: 2px solid whitesmoke;
+	padding: 4%;
+	background-color: white;
+}
+.section-logo{
+	text-align: center;
+}
+.section-logo img{
+
+	height: auto;
+}

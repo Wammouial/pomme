@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Accueil</title>
+
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="home.css">
+	<link rel="stylesheet" type="text/css" href="normalize.css">
+	<style type="text/css">
+		input.form-control{
+			border:none;
+		}
+		label{
+			font-weight: 600;
+		}
+
+	</style>
+</head>
+<body>
+	<section class="container">
+
+		<section class="section-logo">
+			<img style="width: 7em;" src="logo_e-pocrate.png">
+			<img style="width: 15em;" src="Logo-APHP.jpg">
+		</section>
+		<section class="top-menu d-flex justify-content-between pt-5 pb-4">
+			<div class="top-menu__btns">
+				<a class="top-menu__infos" href="#">Jean Dupont - infirmier</a>
+				<a class="btn btn-primary" href="#">Déconnexion</a>
+			</div>
+			<div>
+				<input type="" name="" placeholder="Rechercher un DMP">
+				<a href="search_dmp.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z"/></svg></a>
+
+			</div>
+		</section>
+		<section class="menu">
+			<a class="btn btn-primary" href="#">Notifications</a>
+			<a  class="btn btn-primary" href="#">Planning</a>
+		</section>
+
+		<section class="section-form">
+			<h2>Informations personnelles</h2>
+			<form class="form-login" action="home_modif.html">
+				<div class="form-row">
+
+					<div class="form-group col-md-6">
+						<label for="nom">Nom</label>
+						<input type="text" class="form-control" value="Jean" id="nom">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="date_naiss">Date de naissance</label>
+						<input type="date" class="form-control" value="" id="date_naiss">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="sexe">Sexe</label>
+						<input type="text" class="form-control" value="H" id="sexe">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="cp">Code postal</label>
+						<input type="text" class="form-control" value="93015" id="cp">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="affiliation">Affiliation</label>
+						<input type="text" class="form-control" value="Infirmier" id="affiliation">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="mdp">Mot de passe</label>
+						<input type="text" class="form-control" value="*******" id="mdp">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="lieu_naiss">Lieu de naissance</label>
+						<input type="text" class="form-control" value="8 ruedes rues " id="lieu_naiss">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="num_secu">Numéro de sécurité sociale</label>
+						<input type="text" class="form-control" value="" id="num_secu">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="tel">Téléphone</label>
+						<input type="text" class="form-control" value="" id="tel">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="situation_fam">Situation familliale</label>
+						<input type="text" class="form-control" value="" id="situation_fam">
+					</div>
+				</div>
+				
+
+				<div class="form-group">
+					<label for="adresse">Adresse</label>
+					<input type="text" class="form-control" value="8 rue de Bonne Augure" id="adresse">
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="ville">Ville</label>
+						<input type="text" class="form-control" value="Combs-La-Ville" id="ville">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="cp">Code postal</label>
+						<input type="text" class="form-control" value="93015" id="cp">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="mail">Adresse mail</label>
+					<input type="text" class="form-control" value="jean.dupont@gmail.com" id="mail">
+				</div>
+
+				
+			
+				<input type="submit" class="btn btn-primary" name="" value="Modifier">
+			</form>
+		</section>
+		
+	</section>
+	
+</body>
+</html>

@@ -2,6 +2,15 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    {{ recherche.as_p }}
+    {{ nom }}
+    {{ prenom }}
+    {{ sexe }}
+    {{ date_de_naissance }}
+    {{ lieu_de_naissance }}
+    {{ numero_de_SS }}
+    {{ adresse }}
+    {{ adresse_email }}
+    {{ téléphone }}
+    {{ situation_familiale }}
     <input type="submit" value="Rechercher">
 </form>

@@ -1,6 +1,7 @@
 <h1>Dossier Patient</h1>
 
-<form action="/pomme/reppatient" method="post">
+<!-- Si tu mets une autre action fait en sorte que la vue accepte post et ce formulaire. -->
+<form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Valider">

@@ -2,7 +2,7 @@
 <html>
 <head>
     {% load staticfiles %}
-	<title>Dossier Patient</title>
+	<title>Création Dossier Patient</title>
 
 	<html lang="fr">
 	<meta charset="UTF-8">
@@ -44,7 +44,7 @@
 
 		<section class="section-form">
 			<h2>Dossier patient</h2>
-			<form class="form-login" action="{% url 'reppatient' %}" method="post">
+			<form class="form-login" action="" method="post">
 			{% csrf_token %}
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -112,7 +112,7 @@
 
 				
 			
-				<input type="submit" class="btn btn-primary" name="" value="Valider">
+				<input type="submit" class="btn btn-primary" name="" value="Valider la création">
 			</form>
 		</section>
 		

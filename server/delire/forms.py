@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms import ModelForm
 from django import forms
 from .models import Personne

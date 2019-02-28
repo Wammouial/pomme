@@ -31,7 +31,15 @@ def form(request): #formulaire patient
 		else:
 			print(form.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
-		return render(request, 'recherchepatient.html', locals())
+		return render(request, 'formulairepatient.html', locals())
+		# return render(request, 'recherchepatient.html', locals())  // Pas bon
+		
+		# La vue form attachée à path('formpatient', views.form, name="formpatient") dans urls.py
+		# ne peut retourner que son propre template et non pas celui de recherche qui est
+		# recherchepatient.html. Si tu veux que le contenu du formulaire aille dans une autre
+		# vue tu dois mettre dans l'action du form l'url qui va lancer l'autre vue
+		# Genre <form class="form-login" action="{% url 'reppatient' %}" method="post">
+		# Et là ça t'enverra bien ce que tu veux où tu veux
 
 	else:
 		form = PatientForm()
@@ -51,8 +59,12 @@ def recherche(request):
 			else:
 				patients = b.getAllPersonne(job=0, nom=nom)
 			print(patients)
-
-			return render(request, 'recherchepatient.html', locals(), {'liste': patients})
+			
+			return render(request, 'recherchepatient.html', locals())
+			
+			# return render(request, 'recherchepatient.html', locals(), {'liste': patients}) // Pas bon
+			
+			# Faut faire soit locals() soit {'liste': 'patients'}, les deux ça n'a pas de sens 
 
 		else:
 			print(formu.errors.as_data())
@@ -61,7 +73,7 @@ def recherche(request):
 	else:
 		formu = RechercheForm()
 	
-	return render(request, 'recherchepatient.html', {'formu' : formu})
+	return render(request, 'recherchepatient.html', locals())
 		
 def rep(request): # Sinon runserver marche pas avec urls.py
 	pass

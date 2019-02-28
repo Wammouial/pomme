@@ -47,14 +47,16 @@ def recherche(request):
 			prenom = formu.cleaned_data['prenom']
 			b = BDD()
 			if prenom!='':
-				dictionnaire = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
+				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
 			else:
-				dictionnaire = b.getAllPersonne(job=0, nom=nom)
-			print(dictionnaire)
+				patients = b.getAllPersonne(job=0, nom=nom)
+			print(patients)
+
+			return render(request, 'recherchepatient.html', locals(), {'liste': patients})
 
 		else:
 			print(formu.errors.as_data())
-		return render(request, 'recherchepatient.html', locals(), {'dictionary': dictionnaire})
+		return render(request, 'recherchepatient.html')
 
 	else:
 		formu = RechercheForm()

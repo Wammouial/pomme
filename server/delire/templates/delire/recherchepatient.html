@@ -57,11 +57,9 @@
 					</div>
 				</div>
              
-    <h3>Résultats</h3> <br> 
-{% for i in dictionary.items %}
-    <div class="article">
-       <h3>{{ i }}</h3>
-    </div>
+    <h6>Résultats :</h6> <br> 
+{% for i in liste %}
+       <h3>{{ i.nom }}</h3>
 {% endfor %}
 			
 				<input type="submit" class="btn btn-primary" name="" value="Rechercher">

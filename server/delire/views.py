@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 28 14:40:00 2019
-
-@author: mathilde
-"""
-
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 

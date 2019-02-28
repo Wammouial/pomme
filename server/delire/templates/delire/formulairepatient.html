@@ -44,7 +44,7 @@
 
 		<section class="section-form">
 			<h2>Dossier patient</h2>
-			<form class="form-login" action="" method="post">
+			<form class="form-login" action="{% url 'reppatient' %}" method="post">
 			{% csrf_token %}
 				<div class="form-row">
 					<div class="form-group col-md-6">

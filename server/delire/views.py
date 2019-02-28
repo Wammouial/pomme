@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.contrib import messages
 
 from .BDD import BDD
 from .forms import PatientForm, RechercheForm
@@ -14,10 +15,10 @@ def form(request): #formulaire patient
 			nom = form.cleaned_data['nom']
 			prenom = form.cleaned_data['prenom']
 			sexe = form.cleaned_data['sexe']
-			#if sexe == 'F':
-				#sexe = 1
-			#else:
-				#sexe = 0
+			if sexe == 'F':
+				sexe = 1
+			else:
+				sexe = 0
 			date_de_naissance = form.cleaned_data['dateNaissance']
 			lieu_de_naissance = form.cleaned_data['lieuNaissance']
 			numero_de_SS = form.cleaned_data['numSS']
@@ -25,9 +26,19 @@ def form(request): #formulaire patient
 			adresse_email = form.cleaned_data['email']
 			téléphone = form.cleaned_data['telephone']
 			situation_familiale = form.cleaned_data['situationFamiliale']
-			
 			#create
-			print("/".join((nom, prenom, lieu_de_naissance, numero_de_SS)))  #Si form valide
+			b = BDD()
+			b.createPersonne(job=0, nom=nom,
+							prenom=prenom,
+							sexe=sexe,
+							dateNaissance=date_de_naissance,
+							lieuNaissance=lieu_de_naissance,
+							numSS=numero_de_SS,
+							adresse=adresse,
+							email=adresse_email,
+							telephone=téléphone,
+							situationFamiliale=situation_familiale,
+							linkedTo=None)
 		else:
 			print(form.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
@@ -58,14 +69,10 @@ def recherche(request):
 				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
 			else:
 				patients = b.getAllPersonne(job=0, nom=nom)
-			print(patients)
+			if not(patients):
+				messages.error(request, 'Pas de patient portant ce nom.')
 			
 			return render(request, 'recherchepatient.html', locals())
-			
-			# return render(request, 'recherchepatient.html', locals(), {'liste': patients}) // Pas bon
-			
-			# Faut faire soit locals() soit {'liste': 'patients'}, les deux ça n'a pas de sens 
-
 		else:
 			print(formu.errors.as_data())
 		return render(request, 'recherchepatient.html')

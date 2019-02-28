@@ -56,13 +56,21 @@
 						{{ formu.prenom }}
 					</div>
 				</div>
-             
-    <h6>Résultats :</h6> <br> 
-{% for i in liste %}
-       <h3>{{ i.nom }}</h3>
-{% endfor %}
-			
 				<input type="submit" class="btn btn-primary" name="" value="Rechercher">
+             
+    <br>
+{% for i in patients %}
+<p>{{ i.nom }} {{ i.prenom }} <a href="formpatient">modifier</a></p>
+{% endfor %}
+<br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}{{ message }}
+    {% endfor %}
+</ul>
+{% endif %}
+			
 			</form>
 		</section>
 		

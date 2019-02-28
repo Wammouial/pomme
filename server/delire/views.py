@@ -1,8 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb 28 14:40:00 2019
+
+@author: mathilde
+"""
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 from .BDD import BDD
-from .forms import PatientForm
+from .forms import PatientForm, RechercheForm
 
 # Create your views here.
 
@@ -14,6 +22,10 @@ def form(request): #formulaire patient
 			nom = form.cleaned_data['nom']
 			prenom = form.cleaned_data['prenom']
 			sexe = form.cleaned_data['sexe']
+			#if sexe == 'F':
+				#sexe = 1
+			#else:
+				#sexe = 0
 			date_de_naissance = form.cleaned_data['dateNaissance']
 			lieu_de_naissance = form.cleaned_data['lieuNaissance']
 			numero_de_SS = form.cleaned_data['numSS']
@@ -22,7 +34,7 @@ def form(request): #formulaire patient
 			téléphone = form.cleaned_data['telephone']
 			situation_familiale = form.cleaned_data['situationFamiliale']
 			
-			
+			#create
 			print("/".join((nom, prenom, lieu_de_naissance, numero_de_SS)))  #Si form valide
 		else:
 			print(form.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
@@ -35,10 +47,27 @@ def form(request): #formulaire patient
 	return render(request, 'formulairepatient.html', {'form' : form})
 
 def recherche(request):
-	return HttpResponse("""
-		<h1>Bienvenue sur Pomme</h1>
-		<p>Recherche d'un dossier patient</p>
-		""")
+	if request.method == 'POST':
+		formu = RechercheForm(request.POST)
+
+		if formu.is_valid():
+			nom = formu.cleaned_data['nom']
+			prenom = formu.cleaned_data['prenom']
+			b = BDD()
+			if prenom!='':
+				dictionnaire = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
+			else:
+				dictionnaire = b.getAllPersonne(job=0, nom=nom)
+			print(dictionnaire)
+
+		else:
+			print(formu.errors.as_data())
+		return render(request, 'recherchepatient.html', locals(), {'dictionary': dictionnaire})
+
+	else:
+		formu = RechercheForm()
+	
+	return render(request, 'recherchepatient.html', {'formu' : formu})
 		
 def rep(request): # Sinon runserver marche pas avec urls.py
 	pass

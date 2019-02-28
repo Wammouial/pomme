@@ -1,16 +1,75 @@
-<h1>Recherche Patient</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+	<title>Recherche Patient</title>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ nom }}
-    {{ prenom }}
-    {{ sexe }}
-    {{ date_de_naissance }}
-    {{ lieu_de_naissance }}
-    {{ numero_de_SS }}
-    {{ adresse }}
-    {{ adresse_email }}
-    {{ téléphone }}
-    {{ situation_familiale }}
-    <input type="submit" value="Rechercher">
-</form>
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
+	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
+	<style type="text/css">
+		input.form-control{
+			border:none;
+		}
+		label{
+			font-weight: 600;
+		}
+
+	</style>
+</head>
+<body>
+	<section class="container">
+
+		<section class="section-logo">
+			<img style="width: 7em;" src={% static "logo_e-pocrate.png"%}>
+			<img style="width: 15em;" src={% static "Logo-APHP.jpg" %}>
+		</section>
+		<section class="top-menu d-flex justify-content-between pt-5 pb-4">
+			<div class="top-menu__btns">
+				<a class="top-menu__infos" href="#">Jean Dupont - infirmier</a>
+				<a class="btn btn-primary" href="#">Déconnexion</a>
+			</div>
+			<div>
+				<input type="" name="" placeholder="Rechercher un DMP">
+				<a href="search_dmp.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z"/></svg></a>
+
+			</div>
+		</section>
+		<section class="menu">
+			<a class="btn btn-primary" href="#">Notifications</a>
+			<a  class="btn btn-primary" href="#">Planning</a>
+		</section>
+
+		<section class="section-form">
+			<h2>Recherche patient</h2>
+			<form class="form-login" action="" method="post">
+			{% csrf_token %}
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="nom">Nom</label>
+						{{ formu.nom }}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="prenom">Prénom</label>
+						{{ formu.prenom }}
+					</div>
+				</div>
+             
+    <h3>Résultats</h3> <br> 
+{% for i in dictionary.items %}
+    <div class="article">
+       <h3>{{ i }}</h3>
+    </div>
+{% endfor %}
+			
+				<input type="submit" class="btn btn-primary" name="" value="Rechercher">
+			</form>
+		</section>
+		
+	</section>
+	
+	
+</body>
+</html>

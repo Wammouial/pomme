@@ -47,54 +47,53 @@
 			<form class="form-login" action="" method="post">
 			{% csrf_token %}
 				<div class="form-row">
-
 					<div class="form-group col-md-6">
 						<label for="nom">Nom</label>
 						{{ form.nom }}
 					</div>
 					<div class="form-group col-md-6">
 						<label for="prenom">Prénom</label>
-						<input type="text" class="form-control" value="Dupont" id="prenom">
+						{{ form.prenom }}
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="sexe">Sexe</label>
-						<input type="text" class="form-control" value="H" id="sexe">
+						{{ form.sexe }}
 					</div>
 						<div class="form-group col-md-6">
 						<label for="dateNaissance">Date de naissance</label>
-						<input type="date" class="form-control" value="" id="date_naiss">
+						{{ form.dateNaissance }}
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="lieuNaissance">Ville de naissance</label>
-						<input type="text" class="form-control" value="8 ruedes rues " id="lieu_naiss">
+						{{ form.lieuNaissance }}
 					</div>
 					<div class="form-group col-md-6">
 						<label for="numSS">Numéro de sécurité sociale</label>
-						<input type="text" class="form-control" value="" id="num_secu">
+						{{ form.numSS }}
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="telephone">Téléphone</label>
-						<input type="text" class="form-control" value="" id="tel">
+						{{ form.telephone }}
 					</div>
 					<div class="form-group col-md-6">
 						<label for="situationFamiliale">Situation familliale</label>
-						<input type="text" class="form-control" value="" id="situation_fam">
+						{{ form.situationFamiliale }}
 					</div>
 				</div>
 				
 
 				<div class="form-group">
 					<label for="adresse">Adresse</label>
-					<input type="text" class="form-control" value="8 rue de Bonne Augure" id="adresse">
+					{{ form.adresse }}
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -108,7 +107,7 @@
 				</div>
 				<div class="form-group">
 					<label for="email">Adresse mail</label>
-					<input type="text" class="form-control" value="jean.dupont@gmail.com" id="mail">
+					{{ form.email }}
 				</div>
 
 				

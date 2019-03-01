@@ -105,10 +105,15 @@ def recherche(request):
 		if formu.is_valid():
 			nom = formu.cleaned_data['nom']
 			prenom = formu.cleaned_data['prenom']
+			numSS = formu.cleaned_data['numSS']
 			b = BDD()
-			if prenom!='':
+			if prenom!='' and numSS!='':
+				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom, numSS=numSS)
+			elif prenom!='' and numSS=='':
 				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
-			else:
+			elif prenom=='' and numSS!='':
+				patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
+			else: #prenom=='' and numSS==''
 				patients = b.getAllPersonne(job=0, nom=nom)
 			if not(patients):
 				messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')

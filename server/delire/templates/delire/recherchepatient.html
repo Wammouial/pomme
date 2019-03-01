@@ -55,12 +55,15 @@
 						<label for="prenom">Prénom</label>
 						{{ formu.prenom }}
 					</div>
+						<label for="numSS">Numéro de sécurité sociale</label>&nbsp;&nbsp;
+						{{ formu.numSS }}
 				</div>
+				<br>
 				<input type="submit" class="btn btn-primary" name="" value="Rechercher">
-             
+<br>
     <br>
 {% for i in patients %}
-<p>{{ i.nom }} {{ i.prenom }} <a href="updatePatient" nom=nom prenom=prenom>modifier</a></p>
+<p>{{ i.nom }} {{ i.prenom }}, <b>{{i.numSS }}</b>, {{i.adresse}} <a href="updatePatient" nom=nom prenom=prenom><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></p>
 {% endfor %}
 <br>
 {% if messages %}

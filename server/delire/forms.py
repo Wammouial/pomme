@@ -23,3 +23,4 @@ class PatientForm(ModelForm):
 class RechercheForm(forms.Form):
         nom = forms.CharField(max_length=255)
         prenom = forms.CharField(max_length=255, required=False)
+        numSS = forms.CharField(max_length=15, required=False)

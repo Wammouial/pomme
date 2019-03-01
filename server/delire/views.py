@@ -56,14 +56,25 @@ def form(request): #formulaire patient
 	return render(request, 'formulairepatient.html', {'form' : form})
 
 def modifierPatient(request, idPersonne, nom): #formulaire patient
-	if request.method == 'POST':
-		b = BDD()
-		identite = b.getPersonne(idPersonne)
-		mod = PatientForm(request.POST,initial=identite.nom)
+	b = BDD()
+	identite = b.getPersonne(idPersonne)
+	if request.method == 'GET':
+		print(identite.nom)
+		mod = PatientForm(request.GET, initial={'nom': identite.nom,
+                                           'prenom':identite.prenom,
+                                           'sexe':identite.sexe,
+                                           'dateNaissance':identite.dateNaissance,
+                                           'lieuNaissance':identite.lieuNaissance,
+                                           'nummSS':identite.numSS,
+                                           'adresse':identite.adresse,
+                                           'email':identite.email,
+                                           'telephone':identite.telephone,
+                                           'situationFamiliale':identite.situationFamiliale,})
+	elif request.method == 'POST':
+		mod = PatientForm(request.POST)
 
 		if mod.is_valid():
 
-			#mod.fields['nom'].initial = identite.nom
 			nom = mod.cleaned_data['nom']
 			prenom = mod.cleaned_data['prenom']
 			sexe = mod.cleaned_data['sexe']
@@ -88,9 +99,7 @@ def modifierPatient(request, idPersonne, nom): #formulaire patient
 							adresse=adresse,
 							email=adresse_email,
 							telephone=téléphone,
-							situationFamiliale=situation_familiale,
-							linkedTo=None)
-			print(id)
+							situationFamiliale=situation_familiale)
 		else:
 			print(mod.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
@@ -100,9 +109,6 @@ def modifierPatient(request, idPersonne, nom): #formulaire patient
 		mod = PatientForm()
 	
 	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
-"""def modifierPatient(request, idPersonne): #formulaire patient
-	message = "Le nom de l'album est {}.".format(idPersonne)
-	return HttpResponse(message)"""
 
 def recherche(request):
 	if request.method == 'POST':

@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import TextInput, Textarea
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth.models import PermissionsMixin

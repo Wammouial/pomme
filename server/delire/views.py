@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+from django.http import HttpResponse
 from .BDD import BDD
 from .forms import PatientForm, RechercheForm
 
@@ -26,8 +26,8 @@ def form(request): #formulaire patient
 			téléphone = form.cleaned_data['telephone']
 			situation_familiale = form.cleaned_data['situationFamiliale']
 
-			if not (numero_de_SS.startswith('1') and sexe==1):
-				raise form.ValidationError(form.error_messages['Impossible.'])
+			#if not (numero_de_SS.startswith('1') and sexe==1):
+				#raise form.ValidationError(form.error_messages['Impossible.'])
 
 			#create
 			b = BDD()
@@ -55,11 +55,15 @@ def form(request): #formulaire patient
 	
 	return render(request, 'formulairepatient.html', {'form' : form})
 
-def modifierPatient(request): #modulaire patient
+def modifierPatient(request, idPersonne, nom): #formulaire patient
 	if request.method == 'POST':
-		mod = PatientForm(request.POST)
+		b = BDD()
+		identite = b.getPersonne(idPersonne)
+		mod = PatientForm(request.POST,initial=identite.nom)
 
 		if mod.is_valid():
+
+			#mod.fields['nom'].initial = identite.nom
 			nom = mod.cleaned_data['nom']
 			prenom = mod.cleaned_data['prenom']
 			sexe = mod.cleaned_data['sexe']
@@ -75,8 +79,7 @@ def modifierPatient(request): #modulaire patient
 			téléphone = mod.cleaned_data['telephone']
 			situation_familiale = mod.cleaned_data['situationFamiliale']
 			#update
-			b = BDD()
-			b.updatePersonne(job=0, nom=nom,
+			b.updatePersonne(identite, nom=nom,
 							prenom=prenom,
 							sexe=sexe,
 							dateNaissance=date_de_naissance,
@@ -86,8 +89,8 @@ def modifierPatient(request): #modulaire patient
 							email=adresse_email,
 							telephone=téléphone,
 							situationFamiliale=situation_familiale,
-							linkedTo=None,
-							personne=adresse_email)
+							linkedTo=None)
+			print(id)
 		else:
 			print(mod.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
@@ -97,6 +100,9 @@ def modifierPatient(request): #modulaire patient
 		mod = PatientForm()
 	
 	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
+"""def modifierPatient(request, idPersonne): #formulaire patient
+	message = "Le nom de l'album est {}.".format(idPersonne)
+	return HttpResponse(message)"""
 
 def recherche(request):
 	if request.method == 'POST':

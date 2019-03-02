@@ -10,9 +10,6 @@
 	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
 	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
 	<style type="text/css">
-		input.form-control{
-			border:none;
-		}
 		label{
 			font-weight: 600;
 		}
@@ -55,8 +52,7 @@
 
 		<section class="section-form">
 			<h2>Recherche patient</h2>
-			<form class="form-login" action="" method="post">
-			{% csrf_token %}
+			<form class="form-login" action="" method="get">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nom">Nom</label>

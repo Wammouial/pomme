@@ -55,88 +55,61 @@ def form(request): #formulaire patient
 	
 	return render(request, 'formulairepatient.html', {'form' : form})
 
-def modifierPatient(request, idPersonne, nom): #formulaire patient
+def modifierPatient(request, idPersonne): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
-	if request.method == 'GET':
-		dico = {'nom': identite.nom,
-                                           'prenom':identite.prenom,
-                                           'sexe':identite.sexe,
-                                           'dateNaissance':identite.dateNaissance,
-                                           'lieuNaissance':identite.lieuNaissance,
-                                           'nummSS':identite.numSS,
-                                           'adresse':identite.adresse,
-                                           'email':identite.email,
-                                           'telephone':identite.telephone,
-                                           'situationFamiliale':identite.situationFamiliale,}
-		#print(dico)
-		mod = PatientForm(request.GET, initial=dico)
-		print(mod.fields)
-	elif request.method == 'POST':
+	
+	if request.method == 'POST':
 		mod = PatientForm(request.POST)
 
 		if mod.is_valid():
-
-			nom = mod.cleaned_data['nom']
-			prenom = mod.cleaned_data['prenom']
-			sexe = mod.cleaned_data['sexe']
-			if sexe == 'F':
-				sexe = 1
-			else:
-				sexe = 0
-			date_de_naissance = mod.cleaned_data['dateNaissance']
-			lieu_de_naissance = mod.cleaned_data['lieuNaissance']
-			numero_de_SS = mod.cleaned_data['numSS']
-			adresse= mod.cleaned_data['adresse']
-			adresse_email = mod.cleaned_data['email']
-			téléphone = mod.cleaned_data['telephone']
-			situation_familiale = mod.cleaned_data['situationFamiliale']
 			#update
-			b.updatePersonne(identite, nom=nom,
-							prenom=prenom,
-							sexe=sexe,
-							dateNaissance=date_de_naissance,
-							lieuNaissance=lieu_de_naissance,
-							numSS=numero_de_SS,
-							adresse=adresse,
-							email=adresse_email,
-							telephone=téléphone,
-							situationFamiliale=situation_familiale)
+			b.updatePersonne(identite, **mod.cleaned_data)
 		else:
 			print(mod.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
 		return redirect('/pomme/searchPatient')
 
 	else:
-		mod = PatientForm()
+		dico = {'nom': identite.nom,
+			   'prenom':identite.prenom,
+			   'sexe':identite.sexe,
+			   'dateNaissance':identite.dateNaissance,
+			   'lieuNaissance':identite.lieuNaissance,
+			   'nummSS':identite.numSS,
+			   'adresse':identite.adresse,
+			   'email':identite.email,
+			   'telephone':identite.telephone,
+			   'situationFamiliale':identite.situationFamiliale,
+			   }
+			   
+		#print(dico)
+		mod = PatientForm(initial=dico)
 	
 	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
 
 def recherche(request):
-	if request.method == 'POST':
-		formu = RechercheForm(request.POST)
+	formu = RechercheForm(request.GET)
 
-		if formu.is_valid():
-			nom = formu.cleaned_data['nom']
-			prenom = formu.cleaned_data['prenom']
-			numSS = formu.cleaned_data['numSS']
-			b = BDD()
-			if prenom!='' and numSS!='':
-				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom, numSS=numSS)
-			elif prenom!='' and numSS=='':
-				patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
-			elif prenom=='' and numSS!='':
-				patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
-			else: #prenom=='' and numSS==''
-				patients = b.getAllPersonne(job=0, nom=nom)
-			if not(patients):
-				messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')
-			
-			return render(request, 'recherchepatient.html', locals())
-		else:
-			print(formu.errors.as_data())
-		return render(request, 'recherchepatient.html')
-
+	if formu.is_valid():
+		nom = formu.cleaned_data['nom']
+		prenom = formu.cleaned_data['prenom']
+		numSS = formu.cleaned_data['numSS']
+		b = BDD()
+		if prenom!='' and numSS!='':
+			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom, numSS=numSS)
+		elif prenom!='' and numSS=='':
+			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
+		elif prenom=='' and numSS!='':
+			patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
+		else: #prenom=='' and numSS==''
+			patients = b.getAllPersonne(job=0, nom=nom)
+		if not(patients):
+			messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')
+		
+		return render(request, 'recherchepatient.html', locals())
+	
+	
 	else:
 		formu = RechercheForm()
 	
@@ -149,7 +122,7 @@ def rep(request): # Sinon runserver marche pas avec urls.py
 #DMP
 def afficheDocuments(request, pid=""):
 	#Pour l'instant car pas de template
-	"""b = BDD()
+	b = BDD()
 	
 	personne = b.getPersonne(pid)
 	if personne is None:
@@ -164,7 +137,7 @@ def afficheDocuments(request, pid=""):
 		result += "<li>" + doc.nom + "</li>\n"
 	result += "</ul>"
 	
-	return HttpResponse(result)"""
+	return HttpResponse(result)
 	
 def editDocument(request, did=""):
 	#Toujours pas de template

@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('createPatient', views.form, name="createPatient"),
-    path('updatePatient/<int:idPersonne><str:nom>', views.modifierPatient, name="updatePatient"),
+    path('updatePatient/<int:idPersonne>', views.modifierPatient, name="updatePatient"),
     path('searchPatient', views.recherche, name="searchPatient"),
 	path('afficheDocuments/<int:pid>', views.afficheDocuments, name="afficheDocs"),
 	path('editDocument/<int:did>', views.editDocument, name="editDoc"),

@@ -10,9 +10,6 @@
 	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
 	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
 	<style type="text/css">
-		input.form-control{
-			border:none;
-		}
 		label{
 			font-weight: 600;
 		}
@@ -59,7 +56,7 @@
 			{% csrf_token %}
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="nom">Nom</label>
+						<label for="id_nom">Nom</label>
 						{{ mod.nom }}
 					</div>
 					<div class="form-group col-md-6">
@@ -70,7 +67,7 @@
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="sexe">Sexe</label>
+						<label for="id_sexe">Sexe</label>
 						{{ mod.sexe }}
 					</div>
 						<div class="form-group col-md-6">
@@ -81,47 +78,41 @@
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="lieuNaissance">Ville de naissance</label>
+						<label for="id_lieuNaissance">Ville de naissance</label>
 						{{ mod.lieuNaissance }}
 					</div>
 					<div class="form-group col-md-6">
-						<label for="numSS">Numéro de sécurité sociale</label>
+						<label for="id_numSS">Numéro de sécurité sociale</label>
 						{{ mod.numSS }}
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="telephone">Téléphone</label>
+						<label for="id_telephone">Téléphone</label>
 						{{ mod.telephone }}
 					</div>
 					<div class="form-group col-md-6">
-						<label for="situationFamiliale">Situation familliale</label>
+						<label for="id_situationFamiliale">Situation familliale</label>
 						{{ mod.situationFamiliale }}
 					</div>
 				</div>
 				
 
 				<div class="form-group">
-					<label for="adresse">Adresse</label>
+					<label for="id_adresse">Adresse</label>
 					{{ mod.adresse }}
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="ville">Ville</label>
+						<label for="id_ville">Ville</label>
 						<input type="text" class="form-control" value="Combs-La-Ville" id="ville">
 					</div>
 					<div class="form-group col-md-6">
-						<label for="cp">Code postal</label>
+						<label for="id_cp">Code postal</label>
 						<input type="text" class="form-control" value="93015" id="cp">
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="email">Adresse mail</label>
-					{{ mod.email }}
-				</div>
-
-				
+				</div>			
 			
 				<input type="submit" class="btn btn-primary" name="" value="Valider la modification">
 			</form>

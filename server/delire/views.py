@@ -59,8 +59,7 @@ def modifierPatient(request, idPersonne, nom): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
 	if request.method == 'GET':
-		print(identite.nom)
-		mod = PatientForm(request.GET, initial={'nom': identite.nom,
+		dico = {'nom': identite.nom,
                                            'prenom':identite.prenom,
                                            'sexe':identite.sexe,
                                            'dateNaissance':identite.dateNaissance,
@@ -69,7 +68,10 @@ def modifierPatient(request, idPersonne, nom): #formulaire patient
                                            'adresse':identite.adresse,
                                            'email':identite.email,
                                            'telephone':identite.telephone,
-                                           'situationFamiliale':identite.situationFamiliale,})
+                                           'situationFamiliale':identite.situationFamiliale,}
+		#print(dico)
+		mod = PatientForm(request.GET, initial=dico)
+		print(mod.fields)
 	elif request.method == 'POST':
 		mod = PatientForm(request.POST)
 

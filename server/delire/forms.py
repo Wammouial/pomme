@@ -5,9 +5,9 @@ from django.forms import ModelForm, Textarea, TextInput
 from django import forms
 from .models import Personne
 
-class PatientForm(ModelForm):
+class PatientFormEdit(ModelForm):
 	def __init__(self, *args, **kwargs):
-		super(PatientForm, self).__init__(*args, **kwargs)
+		super(PatientFormEdit, self).__init__(*args, **kwargs)
 		for f in ('numSS', 'situationFamiliale', 'telephone', 'lieuNaissance'):
 			self.fields[f].required = False
 			
@@ -25,6 +25,29 @@ class PatientForm(ModelForm):
 				  'adresse',
 				  'telephone',
 				  'situationFamiliale',
+				  ]
+        
+class PatientFormCreate(ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(PatientFormCreate, self).__init__(*args, **kwargs)
+		for f in ('situationFamiliale', 'telephone', 'lieuNaissance'):
+			self.fields[f].required = False
+			
+		for f in self.fields:
+			self.fields[f].widget.attrs.update({'class': 'form-control'})
+	
+	class Meta:
+		model = Personne
+		fields = ['nom',
+				  'prenom',
+				  'sexe',
+				  'dateNaissance',
+				  'lieuNaissance',
+				  'numSS',
+				  'adresse',
+				  'telephone',
+				  'situationFamiliale',
+				  'email',
 				  ]
 		
 class RechercheForm(forms.Form):

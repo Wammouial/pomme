@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from .BDD import BDD
-from .forms import PatientForm, RechercheForm
+from .forms import PatientFormEdit, PatientFormCreate, RechercheForm
 
 # Create your views here.
 
 def form(request): #formulaire patient
 	if request.method == 'POST':
-		form = PatientForm(request.POST)
+		form = PatientFormCreate(request.POST)
 
 		if form.is_valid():
 			nom = form.cleaned_data['nom']
@@ -45,13 +45,11 @@ def form(request): #formulaire patient
 			messages.success(request, 'Patient crée.')
 		else:
 			print(form.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
-		
-		#return render(request, 'formulairepatient.html', locals())
 
 		return redirect('/pomme/searchPatient')
 
 	else:
-		form = PatientForm()
+		form = PatientFormCreate()
 	
 	return render(request, 'formulairepatient.html', {'form' : form})
 
@@ -60,31 +58,33 @@ def modifierPatient(request, idPersonne): #formulaire patient
 	identite = b.getPersonne(idPersonne)
 	
 	if request.method == 'POST':
-		mod = PatientForm(request.POST)
+		mod = PatientFormEdit(request.POST)
 
 		if mod.is_valid():
 			#update
 			b.updatePersonne(identite, **mod.cleaned_data)
+			messages.success(request, 'Modification effectuée avec succès.')
+
 		else:
 			print(mod.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
 		
 		return redirect('/pomme/searchPatient')
 
 	else:
+		print(identite.numSS)
 		dico = {'nom': identite.nom,
 			   'prenom':identite.prenom,
 			   'sexe':identite.sexe,
 			   'dateNaissance':identite.dateNaissance,
 			   'lieuNaissance':identite.lieuNaissance,
-			   'nummSS':identite.numSS,
+			   'numSS':identite.numSS,
 			   'adresse':identite.adresse,
 			   'email':identite.email,
 			   'telephone':identite.telephone,
 			   'situationFamiliale':identite.situationFamiliale,
 			   }
-			   
-		#print(dico)
-		mod = PatientForm(initial=dico)
+
+		mod = PatientFormEdit(initial=dico)
 	
 	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
 

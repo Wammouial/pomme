@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
 	<style type="text/css">
 		label{
-			font-weight: 600;
+			font-weight: 500;
 		}
 
 	</style>
@@ -72,9 +72,14 @@
     <div class="table">
 {% if patients %}
     <table>
-<tr><td><b>Nom</b></td><td><b>Prénom</b></td><td><b>Num Sécurité Sociale</b></td><td><b>Adresse</b></td></tr>
+<th>Nom</th>
+<th>Prénom</th>
+<th>Num Sécurité Sociale</th>
+<th>Adresse</th>
+<th>Adresse e-mail</th>
+<th>  </th>
 {% for i in patients %}
-<tr><td>{{ i.nom }}</td><td>{{ i.prenom }}</td><td>{{i.numSS }}</td><td>{{i.adresse}}</td> <td><a href="updatePatient/{{ i.id }}{{ i.nom }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
+<tr><td>{{ i.nom }}</td><td>{{ i.prenom }}</td><td>{{i.numSS }}</td><td>{{i.adresse}}</td><td>{{i.email }}</td><td><a href="updatePatient/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
 {% endfor %}
 <table>
 {% endif %}

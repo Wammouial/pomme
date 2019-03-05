@@ -71,7 +71,6 @@ def modifierPatient(request, idPersonne): #formulaire patient
 		return redirect('/pomme/searchPatient')
 
 	else:
-		print(identite.numSS)
 		dico = {'nom': identite.nom,
 			   'prenom':identite.prenom,
 			   'sexe':identite.sexe,

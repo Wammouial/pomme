@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from .BDD import BDD
-from .forms import PatientFormEdit, PatientFormCreate, RechercheForm
+from .forms import PatientFormEdit, PatientFormCreate, RechercheForm, RechercheNoeudForm, NoeudFormEdit
 
 # Create your views here.
 
@@ -95,11 +95,11 @@ def recherche(request):
 		prenom = formu.cleaned_data['prenom']
 		numSS = formu.cleaned_data['numSS']
 		b = BDD()
-		if prenom!='' and numSS!='':
+		if prenom !='' and numSS!='':
 			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom, numSS=numSS)
-		elif prenom!='' and numSS=='':
+		elif prenom !='' and numSS=='':
 			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
-		elif prenom=='' and numSS!='':
+		elif prenom =='' and numSS!='':
 			patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
 		else: #prenom=='' and numSS==''
 			patients = b.getAllPersonne(job=0, nom=nom)
@@ -117,6 +117,56 @@ def recherche(request):
 def rep(request): # Sinon runserver marche pas avec urls.py
 	pass
 		
+#Arborescence
+def afficheNoeud(request) : 
+    if request.method == 'POST':
+        formu = RechercheNoeudForm(request.POST)
+        if formu.is_valid():
+            idNoeud = formu.cleaned_data['idNoeud']
+            bdd = BDD()
+            node = bdd.getNoeud(idNoeud)
+            if (node is None) :
+                messages.error(request,"Le noeud sélectionné n'existe pas.")
+            elif(node == 0) :
+                messages.error(request,"Le noeud sélectionné est vide.")
+                
+            return render(request, 'formulaireAfficheNoeud.html', locals())
+        else:
+            print(formu.errors.as_data())
+        return render(request, 'formulaireAfficheNoeud.html')
+    
+    else:
+        formu = RechercheNoeudForm(request.POST)
+    
+    return render(request, 'formulaireAfficheNoeud.html', locals())
+
+def modifNoeud(request, idNoeud):
+	b = BDD()
+	identite = b.getNoeud(idNoeud)
+	
+	if request.method == 'POST':
+		form = NoeudFormEdit(request.POST)
+
+		if form.is_valid():
+			b.updateNoeud(identite, **form.cleaned_data)
+			messages.success(request, 'Modification effectuée avec succès.')
+
+		else:
+			print(form.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
+		
+		return redirect('/pomme/afficheNoeud')
+
+	else:
+		dico = {
+			   'nom':identite.nom,
+			   'typ':identite.typ,
+			   'boss_id':identite.boss_id,
+			   'pere_id':identite.pere_id,
+			   }
+
+		form = NoeudFormEdit(initial=dico)
+	
+	return render(request, 'formulaireModifNoeud.html', {'form' : form})
 
 #DMP
 def afficheDocuments(request, pid=""):

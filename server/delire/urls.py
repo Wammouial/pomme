@@ -23,4 +23,6 @@ urlpatterns = [
     path('searchPatient', views.recherche, name="searchPatient"),
 	path('afficheDocuments/<int:pid>', views.afficheDocuments, name="afficheDocs"),
 	path('editDocument/<int:did>', views.editDocument, name="editDoc"),
+    path('afficheNoeud', views.afficheNoeud, name="afficheNoeud"),
+    path('modifNoeud/<int:idNoeud>', views.modifNoeud, name="modifNoeud"),
 ]

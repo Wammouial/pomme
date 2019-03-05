@@ -55,3 +55,11 @@ class RechercheForm(forms.Form):
 	prenom = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	numSS = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	
+class RechercheNoeudForm(forms.Form):
+    idNoeud = forms.CharField(max_length=255)
+        
+class NoeudFormEdit(forms.Form):
+    nom = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+    typ = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+    boss_id = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+    pere_id = forms.CharField(max_length=15, required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))

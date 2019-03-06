@@ -149,10 +149,10 @@ def modifierPersonnel(request, idPersonne): #formulaire patient
         else:
             print(mod.errors.as_data())  #Affiche dans la console les champs en erreur et pourquoi
         
-        return redirect('/pomme/searchPatient')
+        return redirect('/pomme/searchPersonnel')
 
     else:
-        print(identite.numSS)
+        print(identite.job)
         dico = {'nom': identite.nom,
                'prenom':identite.prenom,
                'sexe':identite.sexe,

@@ -18,11 +18,12 @@ from . import views
 
 
 urlpatterns = [
-    path('createPatient', views.form, name="createPatient"),
+    path('createPatient', views.formPatient, name="createPatient"),
     path('updatePatient/<int:idPersonne>', views.modifierPatient, name="updatePatient"),
-    path('searchPatient', views.recherche, name="searchPatient"),
+    path('searchPatient', views.recherchePatient, name="searchPatient"),
+    path('createPersonnel', views.formPersonnel, name="createPersonnel"),
+    path('updatePersonnel/<int:idPersonne>', views.modifierPersonnel, name="updatePersonnel"),
+    path('searchPersonnel', views.recherchePersonnel, name="searchPersonnel"),
 	path('afficheDocuments/<int:pid>', views.afficheDocuments, name="afficheDocs"),
 	path('editDocument/<int:did>', views.editDocument, name="editDoc"),
-    path('afficheNoeud', views.afficheNoeud, name="afficheNoeud"),
-    path('modifNoeud/<int:idNoeud>', views.modifNoeud, name="modifNoeud"),
 ]

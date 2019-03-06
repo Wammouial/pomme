@@ -53,7 +53,7 @@ class PatientFormCreate(ModelForm):
 class PersonnelFormEdit(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(PersonnelFormEdit, self).__init__(*args, **kwargs)
-		for f in ('job', 'situationFamiliale', 'telephone', 'lieuNaissance'):
+		for f in ('situationFamiliale', 'telephone', 'lieuNaissance'):
 			self.fields[f].required = False
 			
 		for f in self.fields:
@@ -66,7 +66,7 @@ class PersonnelFormEdit(ModelForm):
 				  'sexe',
 				  'dateNaissance',
 				  'lieuNaissance',
-				  'numSS',
+				  'job',
 				  'adresse',
 				  'telephone',
 				  'situationFamiliale',

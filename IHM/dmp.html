@@ -39,16 +39,16 @@
 	</script>
 </head>
 <body>
-	<section class="container">
+	<section class="container-fluid p-0">
 
-		<section class="section-logo">
+		<section class="container section-logo">
 			<img style="width: 7em;" src="logo_e-pocrate.png">
 			<img style="width: 15em;" src="Logo-APHP.jpg">
 		</section>
-		<section class="top-menu d-flex justify-content-between pt-5 pb-4">
+		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
 			<div class="top-menu__btns">
 				<a class="top-menu__infos" href="#">Jean Dupont - infirmier</a>
-				<a class="btn btn-primary" href="#">Déconnexion</a>
+				<a class="btn btn-primary btn-disconnect" href="#">Déconnexion</a>
 			</div>
 			<div>
 				<input type="" name="" placeholder="Rechercher un DMP">
@@ -56,70 +56,83 @@
 
 			</div>
 		</section>
-		<section class="menu">
-			<a class="btn btn-primary" href="#">Notifications</a>
-			<a  class="btn btn-primary" href="#">Planning</a>
+		<section class="menu container-fluid">
+			<div class="container">
+				<a class="btn btn-primary" href="#">Notifications</a>
+				<a  class="btn btn-primary" href="#">Planning</a>
+			</div>
+			
+		</section>
+		<section class="container-fluid main-container">
 			
 
-		</section>
-		<section class="menu-dmp row">
-			<a class="btn btn-primary" href="#">Coordonnées DMP</a>
-			<a  class="btn btn-primary" href="#">Personnel en charge DMP</a>
-			<a class="btn btn-primary" href="#">Insérer un doc.</a>
-			<a  class="btn btn-primary" href="#">Nouveau doc.</a>
-		</section>
+			<div class="container">
+				<section class="menu-dmp row">
+					<a class="btn btn-primary" href="#">Coordonnées DMP</a>
+					<a  class="btn btn-primary" href="#">Personnel en charge DMP</a>
+					<a class="btn btn-primary" href="#">Insérer un doc.</a>
+					<a  class="btn btn-primary" href="#">Nouveau doc.</a>
+				</section>
 
-		<section class="row">
-			<aside class="col-5">
+				<section class="row main-main-container">
+					<aside class="col-5">
 
-				<div class="arbo row d-flex justify-content-start flex-column">
-					<h4>Arborescence DMp</h4>
-					 <ul id="myUL">
-						<li><span class="caret">Ordonnance</span>
-						<ul class="nested">
-						  <li>Ordonnance 1</li>
-						  <li>Ordonnance 2</li>
-						  <li><span class="caret">Tea</span>
-						    <ul class="nested">
-						      <li>Black Tea</li>
-						      <li>White Tea</li>
-						      <li><span class="caret">Green Tea</span>
-						        <ul class="nested">
-						          <li>Sencha</li>
-						          <li>Gyokuro</li>
-						          <li>Matcha</li>
-						          <li>Pi Lo Chun</li>
-						        </ul>
-						      </li>
-						    </ul>
-						  </li>
-						</ul>
-						</li>
-					</ul> 
+						<div class="arbo row d-flex justify-content-start flex-column">
+							<h4>Arborescence DMp</h4>
+							 <ul id="myUL">
+								<li><span class="caret">Ordonnance</span>
+									<ul class="nested">
+									  <li>Ordonnance 1</li>
+									  <li>Ordonnance 2</li>
+									  <li><span class="caret">Tea</span>
+									    <ul class="nested">
+									      <li>Black Tea</li>
+									      <li>White Tea</li>
+									      <li><span class="caret">Green Tea</span>
+									        <ul class="nested">
+									          <li>Sencha</li>
+									          <li>Gyokuro</li>
+									          <li>Matcha</li>
+									          <li>Pi Lo Chun</li>
+									        </ul>
+									      </li>
+									    </ul>
+									  </li>
+									</ul>
+								</li>
+								<li>
+									<span class="caret">Imageries</span>
+								</li>
+								<li>
+									<span class="caret">Imageries</span>
+								</li>
+							</ul> 
 
-					<ul id="myUL">
-						<li><span class="caret">Ordonnance</span>
-							<ul class="nested">
-							  <li>Ordonnance 1</li>
-							  <li>Ordonnance 2</li>
+							<ul id="myUL">
+								<li><span class="caret">Ordonnance</span>
+									<ul class="nested">
+									  <li>Ordonnance 1</li>
+									  <li>Ordonnance 2</li>
+									</ul>
+								</li>
+							</ul> 
+							
+						</div>
+						<div class="todo">
+							<h4>TODODMP</h4>
+							<ul>
+								<li>Jeudi 5 nov. posologie</li>
 							</ul>
-						</li>
-					</ul> 
-					
-				</div>
-				<div class="todo row">
-					<h4>TODODMP</h4>
-					<ul>
-						<li>Jeudi 5 nov. posologie</li>
-					</ul>
-				</div>
-			</aside>
-			<section class="d-flex justify-content-center align-items-center col-7">
-				<img src="">
-			</section>
+						</div>
+					</aside>
 
-		</section>
-		
+					<section class="d-flex justify-content-center align-items-center col-7">
+						<img src="">
+					</section>
+
+				</section>
+			</section>
+		</div>
 	</section>
 	
 </body>

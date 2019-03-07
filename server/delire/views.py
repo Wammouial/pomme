@@ -26,9 +26,6 @@ def formPatient(request): #formulaire patient
             téléphone = form.cleaned_data['telephone']
             situation_familiale = form.cleaned_data['situationFamiliale']
 
-            #if not (numero_de_SS.startswith('1') and sexe==1):
-                #raise form.ValidationError(form.error_messages['Impossible.'])
-
             #create
             b = BDD()
             b.createPersonne(job=0, nom=nom,
@@ -186,13 +183,24 @@ def recherchePatient(request):
         else: #prenom=='' and numSS==''
             patients = b.getAllPersonne(job=0, nom=nom)
         if not(patients):
-            messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')
+            liste = b.getAllPersonne()
+            taille = len(liste)
+            patients = []
+            compt = 0
+            for i in range(0,taille):
+                if nom in liste[i].nom:
+                    patients.append(liste[i])
+                    compt=compt+1
+            if compt==0:
+                messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')
         
         return render(request, 'recherchepatient.html', locals())
     
     
     else:
         formu = RechercheFormPatient()
+        b = BDD()
+        patients = b.getAllPersonne()
     
     return render(request, 'recherchepatient.html', locals())
 

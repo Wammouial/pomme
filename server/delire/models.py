@@ -29,6 +29,11 @@ SEXE_CHOICES = (
     ('H', 'Homme'),
 )
 
+def getJobByNumber(x):
+	if x not in list(range(5)):
+		return ""
+	
+	return JOBS[x][1]
 		
 class UserManager(BaseUserManager):
 	use_in_migrations = True
@@ -94,6 +99,9 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 
 	def email_user(self, subject, message, from_email=None, **kwargs):
 		send_mail(subject, message, from_email, [self.email], **kwargs)
+		
+	def getInfos(self):
+		return "{} {} : {}".format(self.prenom, self.nom, getJobByNumber(self.job))
 	
 	
 class Specialite(models.Model):

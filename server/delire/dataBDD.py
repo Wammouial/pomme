@@ -3,6 +3,7 @@ import math
 import numpy as np
 from collections import OrderedDict as dic
 
+from django.contrib.auth.hashers import make_password
 from .models import Noeud, Personne, Specialite, Document, Ecrit, EmpSpe, NoeudSpe
 
 EXCEL_FILE = "delire/data.xlsx"
@@ -37,6 +38,10 @@ def treatRow(row, labels, table, vars):
 	for k, v in kwargs.items():
 		if v in vars:
 			kwargs[k] = vars[v]
+		
+		if k == "password" and table is Personne:
+			kwargs[k] = make_password(kwargs[k])
+		
 	
 	return (var, table.objects.create(**kwargs))
 

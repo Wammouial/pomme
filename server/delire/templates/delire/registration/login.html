@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+	<title>Pomme - se connecter</title>
+
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
+	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
+	<style type="text/css">
+		label{
+			font-weight: 500;
+		}
+
+	</style>
+</head>
+<body>
+
+	<section class="container-fluid">
+
+			
+		<section class="container section-logo">
+			<img style="width: 7em;" src={% static "logo_e-pocrate.png"%}>
+			<img style="width: 15em;" src={% static "Logo-APHP.jpg" %}>
+		</section>
+		
+		<section class="section-form">
+			<h2>Se connecter</h2>
+			<form class="form-login" action="" method="POST">
+				{% csrf_token %}
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="nom">E-mail</label>
+						<input type="text" name="email" placeholder="E-mail">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="prenom">Mot de passe</label>
+						<input type="password" name="password" placeholder="Mot de passe">
+					</div>
+				</div>
+				
+				<br>
+				<input type="submit" class="btn btn-primary" value="Se connecter">
+			</form>
+		</section>
+		
+</body>
+</html>

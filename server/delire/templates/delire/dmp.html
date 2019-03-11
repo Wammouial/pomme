@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>DMP de {{ pnameSurname }}</title>
+
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dmp.css' %}">
+	<style type="text/css">
+		input.form-control{
+			border:none;
+		}
+		label{
+			font-weight: 600;
+		}
+
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+
+			var toggler = document.getElementsByClassName("caret");
+			var i;
+			console.log(toggler);
+
+			for (i = 0; i < toggler.length; i++) {
+				console.log("tes")
+				toggler[i].addEventListener("click", function() {
+					console.log("eeee");
+				this.parentElement.querySelector(".nested").classList.toggle("active");
+				this.classList.toggle("caret-down");
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+	<section class="container-fluid p-0">
+
+		<section class="container section-logo">
+			<img style="width: 7em;" src="{% static 'logo_e-pocrate.png' %}">
+			<img style="width: 15em;" src="{% static 'Logo-APHP.jpg' %}">
+		</section>
+		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
+			<div class="top-menu__btns">
+				<a class="top-menu__infos" href="#">{{ request.user.getInfos }}</a>
+				<a class="btn btn-primary btn-disconnect" href="#">Déconnexion</a>
+			</div>
+			<div>
+				<input type="" name="" placeholder="Rechercher un DMP">
+				<a href="search_dmp.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z"/></svg></a>
+
+			</div>
+		</section>
+		<section class="menu container-fluid">
+			<div class="container">
+				<a class="btn btn-primary" href="#">Notifications</a>
+				<a  class="btn btn-primary" href="#">Planning</a>
+			</div>
+			
+		</section>
+		<section class="container-fluid main-container">
+			
+
+			<div class="container">
+				<section class="menu-dmp row">
+					<a class="btn btn-primary" href="#">Coordonnées DMP</a>
+					<a  class="btn btn-primary" href="#">Personnel en charge DMP</a>
+					<a class="btn btn-primary" href="#">Insérer un doc.</a>
+					<a  class="btn btn-primary" href="#">Nouveau doc.</a>
+				</section>
+
+				<section class="row main-main-container">
+					<aside class="col-5">
+
+						<div class="arbo row d-flex justify-content-start flex-column">
+							<h4>Arborescence DMp</h4>
+							 <ul id="myUL">
+								<li><span class="caret">Ordonnance</span>
+									<ul class="nested">
+									  <li>Ordonnance 1</li>
+									  <li>Ordonnance 2</li>
+									  <li><span class="caret">Tea</span>
+									    <ul class="nested">
+									      <li>Black Tea</li>
+									      <li>White Tea</li>
+									      <li><span class="caret">Green Tea</span>
+									        <ul class="nested">
+									          <li>Sencha</li>
+									          <li>Gyokuro</li>
+									          <li>Matcha</li>
+									          <li>Pi Lo Chun</li>
+									        </ul>
+									      </li>
+									    </ul>
+									  </li>
+									</ul>
+								</li>
+								<li>
+									<span class="caret">Imageries</span>
+								</li>
+								<li>
+									<span class="caret">Imageries</span>
+								</li>
+							</ul> 
+
+							<ul id="myUL">
+								<li><span class="caret">Ordonnance</span>
+									<ul class="nested">
+									  <li>Ordonnance 1</li>
+									  <li>Ordonnance 2</li>
+									</ul>
+								</li>
+							</ul> 
+							
+						</div>
+						<div class="todo">
+							<h4>TODODMP</h4>
+							<ul>
+								<li>Jeudi 5 nov. posologie</li>
+							</ul>
+						</div>
+					</aside>
+
+					<section class="d-flex justify-content-center align-items-center col-7">
+						<img src="">
+					</section>
+
+				</section>
+			</section>
+		</div>
+	</section>
+	
+</body>
+</html>

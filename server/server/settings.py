@@ -71,6 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
+LOGIN_REDIRECT_URL = '/pomme/'
+LOGIN_URL = '/pomme/login'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

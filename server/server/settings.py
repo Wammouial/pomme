@@ -26,6 +26,7 @@ SECRET_KEY = 'v6)3x$)_8cpsxl1wdb(%$nc9^f-=%mqi^g_-s!c@_%e0nf4!v('
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
+INTERNAL_IPS = list(ALLOWED_HOSTS)
 
 
 # Application definition
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'delire',
+	'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -46,6 +48,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -75,6 +78,10 @@ LOGIN_REDIRECT_URL = '/pomme/'
 LOGIN_URL = '/pomme/login'
 LOGOUT_REDIRECT_URL = '/pomme/'
 
+
+DEBUG_TOOLBAR_CONFIG = {
+       'INTERCEPT_REDIRECTS': False,
+   }
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

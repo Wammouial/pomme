@@ -68,66 +68,14 @@
 			
 
 			<div class="container">
-				<section class="menu-dmp row">
-					<a class="btn btn-primary" href="#">Coordonnées DMP</a>
-					<a  class="btn btn-primary" href="#">Personnel en charge DMP</a>
-					<a class="btn btn-primary" href="#">Insérer un doc.</a>
-					<a  class="btn btn-primary" href="#">Nouveau doc.</a>
-				</section>
-				
-				<section class="row">
-					<form method="post" action="">
-						{% csrf_token %}
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								{{ form.as_p }}
-							</div>
-						</div>
-						
-						<br>
-						<input type="submit" class="btn btn-primary" value="Valider">
-					</form>
-				</section>
 
 				<section class="row main-main-container">
 					<aside class="col-5">
 
 						<div class="arbo row d-flex justify-content-start flex-column">
-							<h4>Arborescence DMP</h4>
-							<ul id="myUL">
-								<li><span class="caret">Ordonnances</span>
-									<ul class="nested">
-										{% for ordo in ordos %}
-										<li>{% if ordo.fichier %}<span class="caret">{% endif %}{{ ordo.nom }} du {{ ordo.getDate }}</li>
-										{% if ordo.fichier %}
-										<ul class="nested">
-											<li><img src="{{ ordo.getB64 }}"/></li> <!-- img -->
-										</ul>
-										{% endif %}
-										{% endfor %}
-									</ul>
-								</li>
-								
-								<li><span class="caret">Diagnostics</span>
-									<ul class="nested">
-										{% for diagno in diagnos %}
-										{% if diagno.fichier %}<span class="caret">{% endif %}{{ diagno.nom }} du {{ diagno.getDate }}</li>
-										{% if diagno.fichier %}
-										<ul class="nested">
-											<li><img src="{{ diagno.getB64 }}"/></li> <!-- img -->
-										</ul>
-										{% endif %}
-										{% endfor %}
-									</ul>
-								</li>
-							</ul> 
+							<h4>{{ doc.nom }} de {{ patient.get_full_name }}</h4>
+							<img src="{{ doc.getB64 }}"/>"
 							
-						</div>
-						<div class="todo">
-							<h4>TODODMP</h4>
-							<ul>
-								<li>Jeudi 5 nov. posologie</li>
-							</ul>
 						</div>
 					</aside>
 

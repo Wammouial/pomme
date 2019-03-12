@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .BDD import BDD
-from .forms import PatientFormEdit, PatientFormCreate, RechercheFormPatient, RechercheFormPersonnel, PersonnelFormEdit, PersonnelFormCreate
+from .forms import PatientFormEdit, PatientFormCreate, RechercheFormPatient, RechercheFormPersonnel, PersonnelFormEdit, PersonnelFormCreate, AddDocumentForm
 from .models import getJobByNumber
 
 def medicRightsRequired(f):
@@ -254,9 +254,7 @@ def rep(request): # Sinon runserver marche pas avec urls.py
 #DMP
 @login_required
 @medicRightsRequired
-def afficheDocuments(request, pid=""):
-	#Pour l'instant car pas de template
-	
+def afficheDocuments(request, pid=""):	
 	b = BDD()
 	
 	personne = b.getPersonne(pid)
@@ -271,19 +269,19 @@ def afficheDocuments(request, pid=""):
 		
 	
 	pnameSurname = personne.get_full_name()
+	form = AddDocumentForm()
 	
 	return render(request, 'dmp.html', locals())
 
 @login_required
 @medicRightsRequired
 def editDocument(request, did=""):
-	#Toujours pas de template
-	"""b = BDD()
+	b = BDD()
 	
 	doc = b.getDocument(did)
 	if doc is None:
 		raise Http404
 		
-	if request.method == "POST":
-		pass #A suivre
-	"""
+	patient = doc.proprietaire
+	
+	return render(request, 'dmpM.html', locals())

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,13 @@ from .BDD import BDD
 from .forms import PatientFormEdit, PatientFormCreate, RechercheFormPatient, RechercheFormPersonnel, PersonnelFormEdit, PersonnelFormCreate
 from .models import getJobByNumber
 
-# Create your views here.
+def medicRightsRequired(f):
+	def decorate(request, *args, **kwargs):
+		if not request.user.hasMedicRights():
+			raise PermissionDenied
+		return f(request, *args, **kwargs)
+	return decorate
+
 
 @login_required
 def formPatient(request): #formulaire patient
@@ -246,8 +253,10 @@ def rep(request): # Sinon runserver marche pas avec urls.py
 
 #DMP
 @login_required
+@medicRightsRequired
 def afficheDocuments(request, pid=""):
 	#Pour l'instant car pas de template
+	
 	b = BDD()
 	
 	personne = b.getPersonne(pid)
@@ -255,20 +264,18 @@ def afficheDocuments(request, pid=""):
 		raise Http404
 		
 	documents = b.getAllDocument(proprietaire=personne)
-	if documents is None or len(documents) == 0:
-		return HttpResponse("<p>Aucun document pour cette personne</p>")
+	
+	ordos = [doc for doc in documents if doc.typeDoc == "Ordonnance"]
+	diagnos = [doc for doc in documents if doc.typeDoc == "Diagnostic"]
+	
 		
-	result = "<ul>\n"
-	for doc in documents:
-		result += "<li>" + doc.nom + "</li>\n"
-	result += "</ul>"
 	
 	pnameSurname = personne.get_full_name()
-	# userNameSurnameJob = request.user.getInfos()
 	
 	return render(request, 'dmp.html', locals())
 
 @login_required
+@medicRightsRequired
 def editDocument(request, did=""):
 	#Toujours pas de template
 	"""b = BDD()

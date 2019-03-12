@@ -73,6 +73,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 LOGIN_REDIRECT_URL = '/pomme/'
 LOGIN_URL = '/pomme/login'
+LOGOUT_REDIRECT_URL = '/pomme/'
 
 
 # Database

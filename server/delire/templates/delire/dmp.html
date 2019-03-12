@@ -49,7 +49,7 @@
 		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
 			<div class="top-menu__btns">
 				<a class="top-menu__infos" href="#">{{ request.user.getInfos }}</a>
-				<a class="btn btn-primary btn-disconnect" href="#">Déconnexion</a>
+				<a class="btn btn-primary btn-disconnect" href="{% url 'logout' %}">Déconnexion</a>
 			</div>
 			<div>
 				<input type="" name="" placeholder="Rechercher un DMP">
@@ -79,41 +79,31 @@
 					<aside class="col-5">
 
 						<div class="arbo row d-flex justify-content-start flex-column">
-							<h4>Arborescence DMp</h4>
-							 <ul id="myUL">
-								<li><span class="caret">Ordonnance</span>
+							<h4>Arborescence DMP</h4>
+							<ul id="myUL">
+								<li><span class="caret">Ordonnances</span>
 									<ul class="nested">
-									  <li>Ordonnance 1</li>
-									  <li>Ordonnance 2</li>
-									  <li><span class="caret">Tea</span>
-									    <ul class="nested">
-									      <li>Black Tea</li>
-									      <li>White Tea</li>
-									      <li><span class="caret">Green Tea</span>
-									        <ul class="nested">
-									          <li>Sencha</li>
-									          <li>Gyokuro</li>
-									          <li>Matcha</li>
-									          <li>Pi Lo Chun</li>
-									        </ul>
-									      </li>
-									    </ul>
-									  </li>
+										{% for ordo in ordos %}
+										<li>{% if ordo.fichier %}<span class="caret">{% endif %}{{ ordo.nom }} du {{ ordo.getDate }}</li>
+										{% if ordo.fichier %}
+										<ul class="nested">
+											<li><img src="{{ ordo.getB64 }}"/></li> <!-- img -->
+										</ul>
+										{% endif %}
+										{% endfor %}
 									</ul>
 								</li>
-								<li>
-									<span class="caret">Imageries</span>
-								</li>
-								<li>
-									<span class="caret">Imageries</span>
-								</li>
-							</ul> 
-
-							<ul id="myUL">
-								<li><span class="caret">Ordonnance</span>
+								
+								<li><span class="caret">Diagnostics</span>
 									<ul class="nested">
-									  <li>Ordonnance 1</li>
-									  <li>Ordonnance 2</li>
+										{% for diagno in diagnos %}
+										{% if diagno.fichier %}<span class="caret">{% endif %}{{ diagno.nom }} du {{ diagno.getDate }}</li>
+										{% if diagno.fichier %}
+										<ul class="nested">
+											<li><img src="{{ diagno.getB64 }}"/></li> <!-- img -->
+										</ul>
+										{% endif %}
+										{% endfor %}
 									</ul>
 								</li>
 							</ul> 

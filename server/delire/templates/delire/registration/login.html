@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% load staticfiles %}
+    {% load static %}
 	<title>Pomme - se connecter</title>
 
 	<html lang="fr">
@@ -28,16 +28,17 @@
 		
 		<section class="section-form">
 			<h2>Se connecter</h2>
+			{{ form.form_errors.as_list }}
 			<form class="form-login" action="" method="POST">
 				{% csrf_token %}
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="nom">E-mail</label>
-						<input type="text" name="email" placeholder="E-mail">
+						<label for="username">E-mail</label>
+						<input id="username" type="text" name="username" placeholder="E-mail">
 					</div>
 					<div class="form-group col-md-6">
-						<label for="prenom">Mot de passe</label>
-						<input type="password" name="password" placeholder="Mot de passe">
+						<label for="password">Mot de passe</label>
+						<input id="password" type="password" name="password" placeholder="Mot de passe">
 					</div>
 				</div>
 				
@@ -45,6 +46,7 @@
 				<input type="submit" class="btn btn-primary" value="Se connecter">
 			</form>
 		</section>
+		<!-- christelle.crystal@yopmail.com Abcdefg98@ -->
 		
 </body>
 </html>

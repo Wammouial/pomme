@@ -102,6 +102,9 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 		
 	def getInfos(self):
 		return "{} {} : {}".format(self.prenom, self.nom, getJobByNumber(self.job))
+		
+	def hasMedicRights(self):
+		return True if self.job in (1, 4) else False
 	
 	
 class Specialite(models.Model):
@@ -114,6 +117,12 @@ class Document(models.Model):
 	fichier = models.TextField()
 	typeDoc = models.CharField(max_length=255)
 	proprietaire = models.ForeignKey(Personne, on_delete=models.PROTECT)
+	
+	def getB64(self):
+		return "data:image/png;base64,{}".format(self.fichier)
+		
+	def getDate(self):
+		return self.date.strftime("%d-%m-%Y")
 	
 class Ecrit(models.Model):
 	employe = models.ForeignKey(Personne, on_delete=models.CASCADE)

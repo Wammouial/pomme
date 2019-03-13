@@ -76,7 +76,7 @@
 				</section>
 				
 				<section class="row">
-					<form method="post" action="">
+					<form method="post" action="" enctype="multipart/form-data">
 						{% csrf_token %}
 						<div class="form-row">
 							<div class="form-group col-md-6">
@@ -98,12 +98,14 @@
 								<li><span class="caret">Ordonnances</span>
 									<ul class="nested">
 										{% for ordo in ordos %}
-										<li>{% if ordo.fichier %}<span class="caret">{% endif %}{{ ordo.nom }} du {{ ordo.getDate }}</li>
-										{% if ordo.fichier %}
-										<ul class="nested">
-											<li><img src="{{ ordo.getB64 }}"/></li> <!-- img -->
-										</ul>
-										{% endif %}
+										<li>{% if ordo.fichier %}<span class="caret">{% endif %}{{ ordo.nom }} du {{ ordo.getDate }}
+											{% if ordo.fichier %}
+											<ul class="nested">
+												<li><a href="{% url 'editDoc' ordo.id %}"><img src="{{ ordo.getB64 }}"/></a></li> <!-- img -->
+											</ul>
+										
+											{% endif %}
+										</li>
 										{% endfor %}
 									</ul>
 								</li>
@@ -111,12 +113,13 @@
 								<li><span class="caret">Diagnostics</span>
 									<ul class="nested">
 										{% for diagno in diagnos %}
-										{% if diagno.fichier %}<span class="caret">{% endif %}{{ diagno.nom }} du {{ diagno.getDate }}</li>
-										{% if diagno.fichier %}
-										<ul class="nested">
-											<li><img src="{{ diagno.getB64 }}"/></li> <!-- img -->
-										</ul>
-										{% endif %}
+										<li>{% if diagno.fichier %}<span class="caret">{% endif %}{{ diagno.nom }} du {{ diagno.getDate }}
+											{% if diagno.fichier %}
+											<ul class="nested">
+												<li><a href="{% url 'editDoc' diagno.id %}"><img src="{{ diagno.getB64 }}"/></a></li> <!-- img -->
+											</ul>
+											{% endif %}
+										</li>
 										{% endfor %}
 									</ul>
 								</li>

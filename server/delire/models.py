@@ -6,6 +6,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 
+import io
+
 #Type de Noeud
 TYPES_NOEUD = (
 	(0, "AP-HP"),
@@ -119,10 +121,23 @@ class Document(models.Model):
 	proprietaire = models.ForeignKey(Personne, on_delete=models.PROTECT)
 	
 	def getB64(self):
-		return "data:image/png;base64,{}".format(self.fichier)
+		return "data:image/jpeg;base64,{}".format(self.fichier)
 		
 	def getDate(self):
 		return self.date.strftime("%d-%m-%Y")
+		
+	@staticmethod
+	def imgToB64(img):
+		from .BDD import BDD
+		bdd = BDD()
+		array = io.BytesIO()
+		
+		if img.mode == 'P':
+			img = img.convert('RGB')
+		
+		img.save(array, format="JPEG", quality=100)
+		return bdd.encrypt(array.getvalue()).decode()
+		
 	
 class Ecrit(models.Model):
 	employe = models.ForeignKey(Personne, on_delete=models.CASCADE)

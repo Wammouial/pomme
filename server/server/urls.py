@@ -18,10 +18,13 @@ from django.urls import include, path
 from django.conf import settings
 from django.shortcuts import redirect
 
+from delire.views import getImports
+
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('pomme/', include('delire.urls')), # Aller voir dans delire.urls
+	path('imports', getImports),
 	path('', lambda request: redirect('searchPatient', permanent=False)),
 ]
 

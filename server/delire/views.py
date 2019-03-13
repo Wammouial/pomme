@@ -6,7 +6,10 @@ from django.contrib.auth.decorators import login_required
 
 from .BDD import BDD
 from .forms import PatientFormEdit, PatientFormCreate, RechercheFormPatient, RechercheFormPersonnel, PersonnelFormEdit, PersonnelFormCreate, AddDocumentForm
-from .models import getJobByNumber
+from .models import getJobByNumber, Document
+
+import types
+from PIL import Image
 
 def medicRightsRequired(f):
 	def decorate(request, *args, **kwargs):
@@ -266,10 +269,31 @@ def afficheDocuments(request, pid=""):
 	ordos = [doc for doc in documents if doc.typeDoc == "Ordonnance"]
 	diagnos = [doc for doc in documents if doc.typeDoc == "Diagnostic"]
 	
-		
-	
 	pnameSurname = personne.get_full_name()
-	form = AddDocumentForm()
+	
+	if request.method == "POST":
+		form = AddDocumentForm(request.POST, request.FILES)
+		
+		if form.is_valid():
+			nom = form.cleaned_data["nom"]
+			date = form.cleaned_data["date"]
+			brouillon = form.cleaned_data["brouillon"]
+			
+			typeDoc = form.cleaned_data["typeDoc"]
+			typeDoc = "Diagnostic" if typeDoc == 1 else "Ordonnance"
+			
+			fichier = Image.open(form.cleaned_data["fichier"])
+			
+			fichier = Document.imgToB64(fichier)
+			
+			doc = b.createDocument(nom=nom, typeDoc=typeDoc, date=date, brouillon=brouillon, fichier=fichier, proprietaire=personne)
+			return redirect("editDoc", doc.id)
+		
+		else:
+			print(form.errors.as_data())
+			
+	else:
+		form = AddDocumentForm()
 	
 	return render(request, 'dmp.html', locals())
 
@@ -285,3 +309,19 @@ def editDocument(request, did=""):
 	patient = doc.proprietaire
 	
 	return render(request, 'dmpM.html', locals())
+
+	
+def getImports(request):
+	"""Pas touche minouche"""
+	l = []
+	
+	for name, val in globals().items():
+		if isinstance(val, types.ModuleType):
+			l.append(val.__name__)
+			
+	p = "<ul>"
+	for modu in l:
+		p += "\n<li>" + modu + "</li>"
+	p += "\n</ul>"
+	
+	return HttpResponse(p)

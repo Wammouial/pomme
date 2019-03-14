@@ -191,7 +191,7 @@ def recherchePatient(request):
 		prenom = formu.cleaned_data['prenom']
 		numSS = formu.cleaned_data['numSS']
 		b = BDD()
-		if prenom!='' and numSS!='':
+		if prenom!='' and numSS!='': #si on trouve du premier coup
 			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom, numSS=numSS)
 		elif prenom!='' and numSS=='':
 			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
@@ -199,16 +199,34 @@ def recherchePatient(request):
 			patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
 		else: #prenom=='' and numSS==''
 			patients = b.getAllPersonne(job=0, nom=nom)
-		if not(patients):
-			liste = b.getAllPersonne()
+		if not(patients): #si on ne trouve pas du premier coup dans la BDD
+			liste = b.getAllPersonne(job=0)
 			taille = len(liste)
 			patients = []
-			compt = 0
-			for i in range(0,taille):
-				if nom in liste[i].nom:
-					patients.append(liste[i])
-					compt=compt+1
-			if compt==0:
+			found = False
+			nom = nom.lower()
+			prenom = prenom.lower()
+			if prenom!='' and numSS!='':
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower() and prenom in liste[i].prenom.lower() and numSS in liste[i].numSS:
+						patients.append(liste[i])
+						found=True
+			elif prenom!='' and numSS=='':
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower() and prenom in liste[i].prenom.lower():
+						patients.append(liste[i])
+						found=True
+			elif prenom=='' and numSS!='':
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower() and numSS in liste[i].numSS:
+						patients.append(liste[i])
+						found=True
+			else: #prenom=='' and numSS==''
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower(): #si lettre en trop
+						patients.append(liste[i])
+						found=True
+			if found==False:
 				messages.error(request, 'Aucun patient correspondant à ces critères de recherche n’a été trouvé.')
 		
 		return render(request, 'recherchepatient.html', locals())
@@ -217,7 +235,7 @@ def recherchePatient(request):
 	else:
 		formu = RechercheFormPatient()
 		b = BDD()
-		patients = b.getAllPersonne()
+		patients = b.getAllPersonne(job=0)
 	
 	return render(request, 'recherchepatient.html', locals())
 

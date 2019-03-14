@@ -15,6 +15,13 @@
 		}
 
 	</style>
+		<script type="text/javascript">
+var tableau;
+tableau = patients;
+alert(tableau);
+message "eheh";
+alert(message);
+	</script>
 </head>
 <body>
 
@@ -27,15 +34,12 @@
 		</section>
 		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
 			<div class="top-menu__btns">
-				<a class="top-menu__infos" href="#">Jean Dupont - infirmier</a>
-				<a class="btn btn-primary btn-disconnect" href="#">Déconnexion</a>
+				<a class="top-menu__infos" href="#">{{ request.user.getInfos }}</a>
+				<a class="btn btn-primary btn-disconnect" href="{% url 'logout' %}">Déconnexion</a>
 			</div>
-
 			<div>
-				<input type="" name="" placeholder="Rechercher un DMP">
-				<a href="search_dmp.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z"/></svg></a>
-
-			</div>
+				<a href="searchPersonnel"> <input type="button" class="btn btn-primary" value="Rechercher Personnel"> </a>
+            </div>
 		</section>
 		<section class="menu container-fluid">
 			<div class="container">
@@ -45,7 +49,7 @@
 		</section>
 
 		<section class="section-form">
-			<h2>Recherche patient</h2>
+			<h2>Recherche d'un patient</h2>
 			<form class="form-login" action="" method="get">
 				<div class="form-row">
 					<div class="form-group col-md-6">
@@ -66,17 +70,16 @@
     <div class="table">
 {% if patients %}
     <table>
-<th>Nom</th>
-<th>Prénom</th>
-<th>Num Sécurité Sociale</th>
-<th>Adresse</th>
-<th>Adresse e-mail</th>
-<th>  </th>
+<th>  Nom  </th>
+<th>  Prénom  </th>
+<th>  Num Sécurité Sociale  </th>
+<th>  Adresse  </th>
+<th>   </th>
 {% for i in patients %}
-<tr><td>{{ i.nom }}</td><td>{{ i.prenom }}</td><td>{{i.numSS }}</td><td>{{i.adresse}}</td><td>{{i.email }}</td><td><a href="updatePatient/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
+<tr><td><a href="seeDmp/{{ i.id }}">{{ i.nom }}</a></td><td><a href="seeDmp/{{ i.id }}">{{ i.prenom }}</a></td><td>{{i.numSS }}</td><td>{{i.adresse}}</td><td><a href="updatePatient/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
 {% endfor %}
 <table>
-<input type="button" class="btn btn-primary" name="" value="Suivant" onclick="recherche()">
+<input type="button" class="btn btn-primary" name="" value="Suivant" onclick="recherchePatient()">
 {% endif %}
 </div>
 

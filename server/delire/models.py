@@ -80,7 +80,7 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 	adresse = models.CharField(max_length=500)
 	linkedTo = models.ForeignKey(Noeud, on_delete=models.SET_NULL, null=True)
 	job = models.IntegerField(choices=JOBS, default=0)
-	numSS = models.CharField(max_length=14, null=True)
+	numSS = models.CharField(max_length=15, null=True)
 	is_active = models.BooleanField(default=True)
 	
 	objects = UserManager()

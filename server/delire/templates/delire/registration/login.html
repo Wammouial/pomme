@@ -7,45 +7,34 @@
 	<html lang="fr">
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
+	<link rel="stylesheet" type="text/css" href={% static "index.css"%}>
 	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
-	<style type="text/css">
-		label{
-			font-weight: 500;
-		}
-
-	</style>
 </head>
 <body>
 
-	<section class="container-fluid">
+	<section class="container section-login">
 
-			
-		<section class="container section-logo">
-			<img style="width: 7em;" src={% static "logo_e-pocrate.png"%}>
-			<img style="width: 15em;" src={% static "Logo-APHP.jpg" %}>
-		</section>
-		
-		<section class="section-form">
-			<h2>Se connecter</h2>
+	<div class="container d-flex align-items-center flex-column">
+		<img src={% static "Logo-APHP.jpg" %}>
+
 			<form class="form-login" action="" method="POST">
 				{% csrf_token %}
-				<div class="form-row">
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="username">E-mail</label>
-						<input id="username" type="text" name="username" placeholder="E-mail">
+						<input id="username" class="form-control" type="text" name="username">
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="password">Mot de passe</label>
-						<input id="password" type="password" name="password" placeholder="Mot de passe">
+						<input id="password" class="form-control" type="password" name="password">
 					</div>
-				</div>
 				
 				<br>
-				<input type="submit" class="btn btn-primary" value="Se connecter">
+				<p style="text-align: center;"><input type="submit" class="btn btn-primary" value="Se connecter"></p>
 			</form>
-		</section>
+			<img id="epocrate_logo" src={% static "logo_e-pocrate.png"%}>
+
+		</div>
 		<!-- christelle.crystal@yopmail.com Abcdefg98@ -->
-		
+</section>
 </body>
 </html>

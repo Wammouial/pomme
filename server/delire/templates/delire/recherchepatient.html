@@ -43,8 +43,7 @@ alert(message);
 		</section>
 		<section class="menu container-fluid">
 			<div class="container">
-				<a class="btn btn-primary" href="#">Notifications</a>
-				<a  class="btn btn-primary" href="#">Planning</a>
+				<a href="createPatient"> <input type="button" class="btn btn-primary" value="Créer un DMP"> </a>
 			</div>
 		</section>
 
@@ -79,10 +78,11 @@ alert(message);
 <tr><td><a href="seeDmp/{{ i.id }}">{{ i.nom }}</a></td><td><a href="seeDmp/{{ i.id }}">{{ i.prenom }}</a></td><td>{{i.numSS }}</td><td>{{i.adresse}}</td><td><a href="updatePatient/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
 {% endfor %}
 <table>
-<input type="button" class="btn btn-primary" name="" value="Suivant" onclick="recherchePatient()">
+<br>
+<p style="text-align: center;"><input type="button" class="btn btn-primary" name="" value="Suivant" onclick="recherchePatient()"></p>
 {% endif %}
 </div>
-
+<br>
 <br>
 {% if messages %}
 <ul class="messages">

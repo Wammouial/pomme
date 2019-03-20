@@ -1,0 +1,25 @@
+
+
+#epocrate_logo{
+	position: absolute;
+	bottom: 5%;
+	left: 5%;
+	width: 10rem;
+	height: auto;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+}
+.section-login{
+	padding-top: 10%;
+}
+.form-login .form-group{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.form-login{
+	width: 50%;
+}

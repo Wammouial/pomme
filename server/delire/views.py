@@ -129,22 +129,25 @@ def modifierPatient(request, idPersonne): #formulaire patient
 		return redirect('/pomme/searchPatient')
 
 	else:
-		print(identite.numSS)
 		dico = {'nom': identite.nom,
 			   'prenom':identite.prenom,
-			   'sexe':identite.sexe,
 			   'dateNaissance':identite.dateNaissance,
 			   'lieuNaissance':identite.lieuNaissance,
-			   'numSS':identite.numSS,
 			   'adresse':identite.adresse,
 			   'email':identite.email,
 			   'telephone':identite.telephone,
 			   'situationFamiliale':identite.situationFamiliale,
 			   }
+		numSS = identite.numSS
+		if(identite.sexe=="M"):
+			sexe = 'Masculin'
+		else:
+			sexe = 'Féminin'
+
 
 		mod = PatientFormEdit(initial=dico)
-	
-	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
+	print(locals())
+	return render(request, 'formulairemodifpatient.html', locals())
 
 @login_required
 def modifierPersonnel(request, idPersonne): #formulaire patient

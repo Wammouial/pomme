@@ -32,8 +32,8 @@
 			</div>
 
 			<div>
-				<a href="searchPatient"> <input type="button" class="btn btn-primary" value="Rechercher DMP"> </a>
-				<a href="searchPersonnel"> <input type="button" class="btn btn-primary" value="Rechercher Personnel"> </a>
+				<a href="/pomme/searchPatient"> <input type="button" class="btn btn-primary" value="Rechercher DMP"> </a>
+				<a href="/pomme/searchPersonnel"> <input type="button" class="btn btn-primary" value="Rechercher Personnel"> </a>
 			</div>
 		</section>
 		<section class="menu container-fluid">
@@ -59,7 +59,8 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="id_sexe">Sexe</label>
-						{{ mod.sexe }}
+						<br>
+						{{ sexe }}
 					</div>
 						<div class="form-group col-md-6">
 						<label for="dateNaissance">Date de naissance (dd/mm/aaaa)</label>
@@ -74,7 +75,8 @@
 					</div>
 					<div class="form-group col-md-6">
 						<label for="id_numSS">Numéro de sécurité sociale</label>
-						{{ mod.numSS }}
+						<br>
+						{{ numSS }}
 					</div>
 				</div>
 
@@ -94,7 +96,7 @@
 					<label for="id_adresse">Adresse</label>
 					{{ mod.adresse }}
 				</div>
-			
+			<br>
 				<input type="submit" class="btn btn-primary" name="" value="Valider la modification">
 			</form>
 		</section>

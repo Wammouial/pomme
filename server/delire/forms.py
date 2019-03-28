@@ -8,7 +8,7 @@ from .models import Personne
 class PatientFormEdit(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(PatientFormEdit, self).__init__(*args, **kwargs)
-		for f in ('numSS', 'situationFamiliale', 'telephone', 'lieuNaissance'):
+		for f in ('situationFamiliale', 'telephone', 'lieuNaissance'):
 			self.fields[f].required = False
 			
 		for f in self.fields:
@@ -18,10 +18,8 @@ class PatientFormEdit(ModelForm):
 		model = Personne
 		fields = ['nom',
 				  'prenom',
-				  'sexe',
 				  'dateNaissance',
 				  'lieuNaissance',
-				  'numSS',
 				  'adresse',
 				  'telephone',
 				  'situationFamiliale',

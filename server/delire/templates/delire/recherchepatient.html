@@ -66,6 +66,14 @@ alert(message);
 				<input type="submit" class="btn btn-primary" name="" value="Rechercher">
 <br>
     <br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}{{ message }}
+    {% endfor %}
+</ul>
+<br>
+{% endif %}
     <div class="table">
 {% if patients %}
     <table>
@@ -84,13 +92,7 @@ alert(message);
 </div>
 <br>
 <br>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    {% if message.tags %} {% endif %}{{ message }}
-    {% endfor %}
-</ul>
-{% endif %}
+
 			
 			</form>
 		</section>

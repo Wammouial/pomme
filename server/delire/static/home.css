@@ -72,3 +72,8 @@ th {
 }`
 
 tr:nth-child(even) {background-color: #f4fdff;}
+
+.messages {
+font-size: 1.2rem;
+text-align:center;
+}

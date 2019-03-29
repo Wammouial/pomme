@@ -11,13 +11,15 @@ from .models import getJobByNumber, Document
 import types
 from PIL import Image
 
-def medicRightsRequired(f):
-	def decorate(request, *args, **kwargs):
-		if not request.user.hasMedicRights():
-			raise PermissionDenied
-		return f(request, *args, **kwargs)
-	return decorate
-
+def rightsRequired(*args1):
+	def wrap(f):
+		def decorate(request, *args, **kwargs):
+			if request.user.job not in args1:
+				raise PermissionDenied
+			return f(request, *args, **kwargs)
+		return decorate
+	return wrap
+	
 
 @login_required
 def formPatient(request): #formulaire patient
@@ -65,6 +67,7 @@ def formPatient(request): #formulaire patient
 	return render(request, 'formulairepatient.html', {'form' : form})
 
 @login_required
+@rightsRequired(2)
 def formPersonnel(request): #formulaire patient
 	if request.method == 'POST':
 		form = PersonnelFormCreate(request.POST)
@@ -150,6 +153,7 @@ def modifierPatient(request, idPersonne): #formulaire patient
 	return render(request, 'formulairemodifpatient.html', locals())
 
 @login_required
+@rightsRequired(2)
 def modifierPersonnel(request, idPersonne): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
@@ -243,6 +247,7 @@ def recherchePatient(request):
 	return render(request, 'recherchepatient.html', locals())
 
 @login_required
+@rightsRequired(2)
 def recherchePersonnel(request):
 	formu = RechercheFormPersonnel(request.GET)
 
@@ -277,7 +282,7 @@ def rep(request): # Sinon runserver marche pas avec urls.py
 
 #DMP
 @login_required
-@medicRightsRequired
+@rightsRequired(1, 4)
 def afficheDocuments(request, pid=""):	
 	b = BDD()
 	
@@ -319,7 +324,7 @@ def afficheDocuments(request, pid=""):
 	return render(request, 'dmp.html', locals())
 
 @login_required
-@medicRightsRequired
+@rightsRequired(1, 4)
 def editDocument(request, did=""):
 	b = BDD()
 	

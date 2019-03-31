@@ -6,6 +6,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 
+import io
+
 #Type de Noeud
 TYPES_NOEUD = (
 	(0, "AP-HP"),
@@ -29,6 +31,11 @@ SEXE_CHOICES = (
     ('H', 'Homme'),
 )
 
+def getJobByNumber(x):
+	if x not in list(range(5)):
+		return ""
+	
+	return JOBS[x][1]
 		
 class UserManager(BaseUserManager):
 	use_in_migrations = True
@@ -73,7 +80,7 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 	adresse = models.CharField(max_length=500)
 	linkedTo = models.ForeignKey(Noeud, on_delete=models.SET_NULL, null=True)
 	job = models.IntegerField(choices=JOBS, default=0)
-	numSS = models.CharField(max_length=14, null=True)
+	numSS = models.CharField(max_length=15, null=True)
 	is_active = models.BooleanField(default=True)
 	
 	objects = UserManager()
@@ -94,6 +101,12 @@ class Personne(AbstractBaseUser, PermissionsMixin):
 
 	def email_user(self, subject, message, from_email=None, **kwargs):
 		send_mail(subject, message, from_email, [self.email], **kwargs)
+		
+	def getInfos(self):
+		return "{} {} : {}".format(self.prenom, self.nom, getJobByNumber(self.job))
+		
+	def hasMedicRights(self):
+		return True if self.job in (1, 4) else False
 	
 	
 class Specialite(models.Model):
@@ -106,6 +119,25 @@ class Document(models.Model):
 	fichier = models.TextField()
 	typeDoc = models.CharField(max_length=255)
 	proprietaire = models.ForeignKey(Personne, on_delete=models.PROTECT)
+	
+	def getB64(self):
+		return "data:image/jpeg;base64,{}".format(self.fichier)
+		
+	def getDate(self):
+		return self.date.strftime("%d-%m-%Y")
+		
+	@staticmethod
+	def imgToB64(img):
+		from .BDD import BDD
+		bdd = BDD()
+		array = io.BytesIO()
+		
+		if img.mode == 'P':
+			img = img.convert('RGB')
+		
+		img.save(array, format="JPEG", quality=100)
+		return bdd.encrypt(array.getvalue()).decode()
+		
 	
 class Ecrit(models.Model):
 	employe = models.ForeignKey(Personne, on_delete=models.CASCADE)

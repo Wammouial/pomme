@@ -53,7 +53,7 @@ class PatientFormCreate(ModelForm):
 class PersonnelFormEdit(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(PersonnelFormEdit, self).__init__(*args, **kwargs)
-		for f in ('job', 'situationFamiliale', 'telephone', 'lieuNaissance'):
+		for f in ('situationFamiliale', 'telephone', 'lieuNaissance'):
 			self.fields[f].required = False
 			
 		for f in self.fields:
@@ -66,7 +66,7 @@ class PersonnelFormEdit(ModelForm):
 				  'sexe',
 				  'dateNaissance',
 				  'lieuNaissance',
-				  'numSS',
+				  'job',
 				  'adresse',
 				  'telephone',
 				  'situationFamiliale',
@@ -104,4 +104,11 @@ class RechercheFormPersonnel(forms.Form):
 	nom = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	prenom = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	job = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	
+class AddDocumentForm(forms.Form):
+	nom = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	typeDoc = forms.ChoiceField(choices=[(1, "Diagnostic"), (2, "Ordonnance")])
+	date = forms.DateField(input_formats=['%m/%d/%y'], initial="jj/mm/aa")
+	fichier = forms.ImageField(max_length=255, allow_empty_file=False)
+	brouillon = forms.BooleanField(initial=True, required=False)
 	

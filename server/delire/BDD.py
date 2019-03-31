@@ -9,7 +9,7 @@ class BDD(object):
 	TYPE_PERSONNE = 2
 	TYPE_NOEUD    = 3
 	
-	def _encrypt(self, data):
+	def encrypt(self, data):
 		"""Encode le paramètre data(str ou bytes) en base64 et retourne
 		   l'objet bytes renvoyé."""
 		
@@ -22,7 +22,7 @@ class BDD(object):
 
 		return base64.b64encode(dataBin)
 		
-	def _decrypt(self, dataEnc):
+	def decrypt(self, dataEnc):
 		""" Décode le paramètre dataEnc de type bin encodé en base64."""
 		
 		if type(dataEnc) != bytes:

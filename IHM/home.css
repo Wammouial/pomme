@@ -62,3 +62,14 @@
 
 	height: auto;
 }
+.form-control {
+  border-radius: 4px;
+  border: 2px solid whitesmoke;
+}
+
+th {
+  background-color: #0063af;
+  color: white;
+}`
+
+tr:nth-child(even) {background-color: #f4fdff;}

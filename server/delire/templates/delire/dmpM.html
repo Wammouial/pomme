@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>DMP de {{ pnameSurname }}</title>
+
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'dmp.css' %}">
+	<style type="text/css">
+		input.form-control{
+			border:none;
+		}
+		label{
+			font-weight: 600;
+		}
+
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+
+			var toggler = document.getElementsByClassName("caret");
+			var i;
+			console.log(toggler);
+
+			for (i = 0; i < toggler.length; i++) {
+				console.log("tes")
+				toggler[i].addEventListener("click", function() {
+					console.log("eeee");
+				this.parentElement.querySelector(".nested").classList.toggle("active");
+				this.classList.toggle("caret-down");
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+	<section class="container-fluid p-0">
+
+		<section class="container section-logo">
+			<img style="width: 7em;" src="{% static 'logo_e-pocrate.png' %}">
+			<img style="width: 15em;" src="{% static 'Logo-APHP.jpg' %}">
+		</section>
+		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
+			<div class="top-menu__btns">
+				<a class="top-menu__infos" href="#">{{ request.user.getInfos }}</a>
+				<a class="btn btn-primary btn-disconnect" href="{% url 'logout' %}">Déconnexion</a>
+			</div>
+			<div>
+			<a href="/pomme/searchPatient"> <input type="button" class="btn btn-primary" value="Rechercher DMP"> </a>
+				<a href="/pomme/searchPersonnel"> <input type="button" class="btn btn-primary" value="Rechercher Personnel"> </a>
+			</div>
+		</section>
+		<section class="menu container-fluid">
+			<div class="container">
+			</div>
+			
+		</section>
+		<section class="container-fluid main-container">
+			
+
+			<div class="container">
+
+				<section class="row main-main-container">
+					<aside class="col-5">
+
+						<div class="arbo row d-flex justify-content-start flex-column">
+							<h4>{{ doc.nom }} de {{ patient.get_full_name }}</h4>
+							<img src="{{ doc.getB64 }}"/>"
+							
+						</div>
+					</aside>
+
+					<section class="d-flex justify-content-center align-items-center col-7">
+						<img src="">
+					</section>
+
+				</section>
+			</section>
+		</div>
+	</section>
+	
+</body>
+</html>

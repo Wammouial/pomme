@@ -8,7 +8,7 @@ from .models import Personne
 class PatientFormEdit(ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(PatientFormEdit, self).__init__(*args, **kwargs)
-		for f in ('numSS', 'situationFamiliale', 'telephone', 'lieuNaissance'):
+		for f in ('situationFamiliale', 'telephone', 'lieuNaissance'):
 			self.fields[f].required = False
 			
 		for f in self.fields:
@@ -18,10 +18,8 @@ class PatientFormEdit(ModelForm):
 		model = Personne
 		fields = ['nom',
 				  'prenom',
-				  'sexe',
 				  'dateNaissance',
 				  'lieuNaissance',
-				  'numSS',
 				  'adresse',
 				  'telephone',
 				  'situationFamiliale',
@@ -108,7 +106,7 @@ class RechercheFormPersonnel(forms.Form):
 class AddDocumentForm(forms.Form):
 	nom = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	typeDoc = forms.ChoiceField(choices=[(1, "Diagnostic"), (2, "Ordonnance")])
-	date = forms.DateField(input_formats=['%m/%d/%y'], initial="jj/mm/aa")
+	date = forms.DateField(input_formats=['%d/%m/%y'], widget=forms.TextInput(attrs={'placeholder' : 'jj/mm/aa'}))
 	fichier = forms.ImageField(max_length=255, allow_empty_file=False)
 	brouillon = forms.BooleanField(initial=True, required=False)
 	

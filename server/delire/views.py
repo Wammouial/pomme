@@ -11,15 +11,17 @@ from .models import getJobByNumber, Document
 import types
 from PIL import Image
 
-def medicRightsRequired(f):
-	def decorate(request, *args, **kwargs):
-		if not request.user.hasMedicRights():
-			raise PermissionDenied
-		return f(request, *args, **kwargs)
-	return decorate
 
+def rightsRequired(*args1):
+	def wrap(f):
+		def decorate(request, *args, **kwargs):
+			if request.user.job not in args1:
+				raise PermissionDenied
+			return f(request, *args, **kwargs)
+		return decorate
+	return wrap
 
-#@login_required
+@login_required
 def formPatient(request): #formulaire patient
 	if request.method == 'POST':
 		form = PatientFormCreate(request.POST)
@@ -64,7 +66,8 @@ def formPatient(request): #formulaire patient
 	
 	return render(request, 'formulairepatient.html', {'form' : form})
 
-#@login_required
+@login_required
+@rightsRequired(2)
 def formPersonnel(request): #formulaire patient
 	if request.method == 'POST':
 		form = PersonnelFormCreate(request.POST)
@@ -109,7 +112,7 @@ def formPersonnel(request): #formulaire patient
 	
 	return render(request, 'formulairepersonnel.html', {'form' : form})
 
-#@login_required
+@login_required
 def modifierPatient(request, idPersonne): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
@@ -128,24 +131,28 @@ def modifierPatient(request, idPersonne): #formulaire patient
 		return redirect('/pomme/searchPatient')
 
 	else:
-		print(identite.numSS)
 		dico = {'nom': identite.nom,
 			   'prenom':identite.prenom,
-			   'sexe':identite.sexe,
 			   'dateNaissance':identite.dateNaissance,
 			   'lieuNaissance':identite.lieuNaissance,
-			   'numSS':identite.numSS,
 			   'adresse':identite.adresse,
 			   'email':identite.email,
 			   'telephone':identite.telephone,
 			   'situationFamiliale':identite.situationFamiliale,
 			   }
+		numSS = identite.numSS
+		if(identite.sexe=="M"):
+			sexe = 'Masculin'
+		else:
+			sexe = 'Féminin'
+
 
 		mod = PatientFormEdit(initial=dico)
-	
-	return render(request, 'formulairemodifpatient.html', {'mod' : mod})
+	print(locals())
+	return render(request, 'formulairemodifpatient.html', locals())
 
-#@login_required
+@login_required
+@rightsRequired(2)
 def modifierPersonnel(request, idPersonne): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
@@ -181,12 +188,11 @@ def modifierPersonnel(request, idPersonne): #formulaire patient
 			sexe = 'Masculin'
 		else:
 			sexe = 'Féminin'
-
 		mod = PersonnelFormEdit(initial=dico)
 	
 	return render(request, 'formulairemodifpersonnel.html', {'mod' : mod})
 
-#@login_required
+@login_required
 def recherchePatient(request):
 	formu = RechercheFormPatient(request.GET)
 
@@ -201,7 +207,7 @@ def recherchePatient(request):
 			patients = b.getAllPersonne(job=0, nom=nom, prenom=prenom)
 		elif prenom=='' and numSS!='':
 			patients = b.getAllPersonne(job=0, nom=nom, numSS=numSS)
-		else:
+		else: #prenom=='' and numSS==''
 			patients = b.getAllPersonne(job=0, nom=nom)
 		if not(patients): #si on ne trouve pas du premier coup dans la BDD
 			liste = b.getAllPersonne(job=0)
@@ -243,7 +249,8 @@ def recherchePatient(request):
 	
 	return render(request, 'recherchepatient.html', locals())
 
-#@login_required
+@login_required
+@rightsRequired(2)
 def recherchePersonnel(request):
 	formu = RechercheFormPersonnel(request.GET)
 
@@ -294,14 +301,14 @@ def recherchePersonnel(request):
 	
 	return render(request, 'recherchepersonnel.html', locals())
 
-#@login_required	
+@login_required	
 def rep(request): # Sinon runserver marche pas avec urls.py
 	pass
 		
 
 #DMP
-#@login_required
-@medicRightsRequired
+@login_required
+@rightsRequired(1, 4)
 def afficheDocuments(request, pid=""):	
 	b = BDD()
 	
@@ -342,8 +349,8 @@ def afficheDocuments(request, pid=""):
 	
 	return render(request, 'dmp.html', locals())
 
-#@login_required
-@medicRightsRequired
+@login_required
+@rightsRequired(1, 4)
 def editDocument(request, did=""):
 	b = BDD()
 	

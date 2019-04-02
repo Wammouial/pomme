@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+	<title>Modification Dossier Personnel</title>
+
+	<html lang="fr">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href={% static "home.css"%}>
+	<link rel="stylesheet" type="text/css" href={% static "normalize.css"%}>
+	<style type="text/css">
+		label{
+			font-weight: 600;
+		}
+
+	</style>
+</head>
+<body>
+
+			<section class="container section-logo">
+			<img style="width: 7em;" src={% static "logo_e-pocrate.png"%}>
+			<img style="width: 15em;" src={% static "Logo-APHP.jpg" %}>
+		</section>
+		<section class="container top-menu d-flex justify-content-between pt-5 pb-4">
+			<div class="top-menu__btns">
+				<a class="top-menu__infos" href="#">{{ request.user.getInfos }}</a>
+				<a class="btn btn-primary btn-disconnect" href="{% url 'logout' %}">Déconnexion</a>
+			</div>
+
+			<div>
+				<a href="/pomme/searchPatient"> <input type="button" class="btn btn-primary" value="Rechercher DMP"> </a>
+				<a href="/pomme/searchPersonnel"> <input type="button" class="btn btn-primary" value="Rechercher Personnel"> </a>
+			</div>
+		</section>
+		<section class="menu container-fluid">
+			<div class="container">
+			</div>
+		</section>
+
+		<section class="section-form">
+			<h2>Modification des informations personnelles</h2>
+			<form class="form-login" action="" method="post">
+			{% csrf_token %}
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="id_nom">Nom</label>
+						{{ mod.nom }}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="prenom">Prénom</label>
+						{{ mod.prenom }}
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="id_sexe">Sexe</label>
+						{{ sexe }}
+					</div>
+						<div class="form-group col-md-6">
+						<label for="dateNaissance">Date de naissance (dd/mm/aaaa)</label>
+						{{ mod.dateNaissance }}
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="id_lieuNaissance">Ville de naissance</label>
+						{{ mod.lieuNaissance }}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="id_job">Affiliation</label>
+						{{ job }}
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="id_telephone">Téléphone</label>
+						{{ mod.telephone }}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="id_situationFamiliale">Situation familliale</label>
+						{{ mod.situationFamiliale }}
+					</div>
+				</div>
+				
+
+				<div class="form-group">
+					<label for="id_adresse">Adresse</label>
+					{{ mod.adresse }}
+				</div>
+				<input type="submit" class="btn btn-primary" name="" value="Valider la modification">
+			</form>
+		</section>
+		
+	</section>
+	
+</body>
+</html>

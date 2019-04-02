@@ -11,6 +11,7 @@ from .models import getJobByNumber, Document
 import types
 from PIL import Image
 
+
 def rightsRequired(*args1):
 	def wrap(f):
 		def decorate(request, *args, **kwargs):
@@ -19,7 +20,6 @@ def rightsRequired(*args1):
 			return f(request, *args, **kwargs)
 		return decorate
 	return wrap
-	
 
 @login_required
 def formPatient(request): #formulaire patient
@@ -82,7 +82,7 @@ def formPersonnel(request): #formulaire patient
 				sexe = 0
 			date_de_naissance = form.cleaned_data['dateNaissance']
 			lieu_de_naissance = form.cleaned_data['lieuNaissance']
-			job = form.cleaned_data['job']
+			job = form.cleaned_data['job'] #getJobByNumber(form.cleaned_data['job'])
 			adresse= form.cleaned_data['adresse']
 			adresse_email = form.cleaned_data['email']
 			téléphone = form.cleaned_data['telephone']
@@ -90,13 +90,12 @@ def formPersonnel(request): #formulaire patient
 
 			#create
 			b = BDD()
-			b.createPersonne(job=job,
+			b.createPersonne(job=job, numSS=None,
 							nom=nom,
 							prenom=prenom,
 							sexe=sexe,
 							dateNaissance=date_de_naissance,
 							lieuNaissance=lieu_de_naissance,
-							numSS="",
 							adresse=adresse,
 							email=adresse_email,
 							telephone=téléphone,
@@ -178,13 +177,17 @@ def modifierPersonnel(request, idPersonne): #formulaire patient
 			   'sexe':identite.sexe,
 			   'dateNaissance':identite.dateNaissance,
 			   'lieuNaissance':identite.lieuNaissance,
-			   'job':identite.job,
+			   'job':identite.job, #verif et numSS ?
 			   'adresse':identite.adresse,
 			   'email':identite.email,
 			   'telephone':identite.telephone,
 			   'situationFamiliale':identite.situationFamiliale,
 			   }
 
+		if(identite.sexe=="M"):
+			sexe = 'Masculin'
+		else:
+			sexe = 'Féminin'
 		mod = PersonnelFormEdit(initial=dico)
 	
 	return render(request, 'formulairemodifpersonnel.html', {'mod' : mod})
@@ -254,24 +257,47 @@ def recherchePersonnel(request):
 	if formu.is_valid():
 		nom = formu.cleaned_data['nom']
 		prenom = formu.cleaned_data['prenom']
-		job = formu.cleaned_data['job']
 		b = BDD()
-		if prenom!='' and job!='':
-			personnels = b.getAllPersonne(numSS=0, nom=nom, prenom=prenom, job=job)
-		elif prenom!='' and job=='':
-			personnels = b.getAllPersonne(numSS=0, nom=nom, prenom=prenom)
-		elif prenom=='' and job!='':
-			personnels = b.getAllPersonne(numSS=0, nom=nom, job=job)
-		else: #prenom=='' and job==''
-			personnels = b.getAllPersonne(numSS=0, nom=nom)
-		if not(personnels):
-			messages.error(request, 'Aucun personnel correspondant à ces critères de recherche n’a été trouvé.')
-		
+		if nom!='' and prenom!='':
+			personnels = b.getAllPersonne(nom=nom, prenom=prenom)
+		else:
+			personnels = b.getAllPersonne(nom=nom)
+		if not(personnels): #si on ne trouve pas du premier coup dans la BDD
+			liste = b.getAllPersonne()
+			taille = len(liste)
+			personnels = []
+			found = False
+			nom = nom.lower()
+			prenom = prenom.lower()
+			if nom!='' and prenom!='':
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower() and prenom in liste[i].prenom.lower():
+						personnels.append(liste[i])
+						found=True
+			else: #prenom==''
+				for i in range(0,taille):
+					if nom in liste[i].nom.lower(): #si lettre en trop
+						personnels.append(liste[i])
+						found=True
+			if found==False:
+				messages.error(request, 'Aucun personnel correspondant à ces critères de recherche n’a été trouvé.')
+			
+			postTaille = len(personnels)
+			for i in range(0,postTaille):
+				if personnels[i].job == 0:
+					personnels.remove(personnels[i])
+
 		return render(request, 'recherchepersonnel.html', locals())
-	
-	
+
 	else:
 		formu = RechercheFormPersonnel()
+		b = BDD()
+		liste = b.getAllPersonne()
+		taille = len(liste)
+		personnels = []
+		for i in range(0,taille):
+			if not (liste[i].job == 0):
+				personnels.append(liste[i])
 	
 	return render(request, 'recherchepersonnel.html', locals())
 

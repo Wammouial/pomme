@@ -15,8 +15,16 @@
 		}
 
 	</style>
+		<script type="text/javascript">
+var tableau;
+tableau = personnels;
+alert(tableau);
+message "eheh";
+alert(message);
+	</script>
 </head>
 <body>
+	<section class="container-fluid">
 
 			<section class="container section-logo">
 			<img style="width: 7em;" src={% static "logo_e-pocrate.png"%}>
@@ -57,30 +65,47 @@
 				<input type="submit" class="btn btn-primary" name="" value="Rechercher">
 <br>
     <br>
-    <div class="table">
-{% if personnels %}
-    <table>
-<th>Nom</th>
-<th>Prénom</th>
-<th>Num Sécurité Sociale</th>
-<th>Adresse</th>
-<th>Adresse e-mail</th>
-<th>  </th>
-{% for i in personnels %}
-<tr><td>{{ i.nom }}</td><td>{{ i.prenom }}</td><td>{{i.job }}</td><td>{{i.adresse}}</td><td>{{i.email }}</td><td><a href="updatePersonnel/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
-{% endfor %}
-<table>
-{% endif %}
-</div>
-
-<br>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     {% if message.tags %} {% endif %}{{ message }}
     {% endfor %}
 </ul>
+<br>
 {% endif %}
+    <div class="table">
+{% if personnels %}
+    <table>
+<th>Nom</th>
+<th>Prénom</th>
+<th>Affiliation</th>
+<th>Adresse</th>
+<th>  </th>
+{% for i in personnels %}
+<tr><td>{{ i.nom }}</td><td>{{ i.prenom }}</td>
+
+{% if i.job == 1%}
+<td>{{ affiliation1 }}</td>
+{% endif %}
+{% if i.job == 2%}
+<td>{{ affiliation2 }}</td>
+{% endif %}
+{% if i.job == 3%}
+<td>{{ affiliation3 }}</td>
+{% endif %}
+{% if i.job == 4%}
+<td>{{ affiliation4 }}</td>
+{% endif %}
+
+<td>{{i.adresse}}</td><td><a href="updatePersonnel/{{ i.id }}"><img src={% static "stylo_modification.png"%} width="20" height="20" /></a></td></tr>
+{% endfor %}
+<table>
+<br>
+<p style="text-align: center;"><input type="button" class="btn btn-primary" name="" value="Suivant" onclick="recherchePersonnel()"></p>
+{% endif %}
+</div>
+<br>
+<br>
 			
 			</form>
 		</section>

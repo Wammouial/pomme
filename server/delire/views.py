@@ -253,6 +253,10 @@ def recherchePatient(request):
 @rightsRequired(2)
 def recherchePersonnel(request):
 	formu = RechercheFormPersonnel(request.GET)
+	affiliation1 = "Secrétaire"
+	affiliation2 = "DataManager"
+	affiliation3 = "Aide-Soignant"
+	affiliation4 = "Médecin"
 
 	if formu.is_valid():
 		nom = formu.cleaned_data['nom']

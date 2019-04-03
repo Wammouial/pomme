@@ -6,6 +6,7 @@
 
 	<html lang="fr">
 	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="{% static 'apple.png' %}" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
@@ -66,24 +67,8 @@
 
 			<div class="container">
 				<section class="menu-dmp row">
-					<a class="btn btn-primary" href="#">Coordonnées DMP</a>
-					<a  class="btn btn-primary" href="#">Personnel en charge DMP</a>
-					<a class="btn btn-primary" href="#">Insérer un doc.</a>
-					<a  class="btn btn-primary" href="#">Nouveau doc.</a>
-				</section>
-				
-				<section class="row">
-					<form method="post" action="" enctype="multipart/form-data">
-						{% csrf_token %}
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								{{ form.as_p }}
-							</div>
-						</div>
-						
-						<br>
-						<input type="submit" class="btn btn-primary" value="Valider">
-					</form>
+					<a class="btn btn-primary" href="#">DMP Patient</a>
+					<a class="btn btn-primary" href="{% url 'updatePatient' personne.id %}">Coordonnées Patient</a>
 				</section>
 
 				<section class="row main-main-container">
@@ -136,9 +121,27 @@
 					</section>
 
 				</section>
+				
+				<section class="row">
+					<h2 style="width: 100%; text-align: center; margin-top: 20px;">Ajouter un document au DMP :</h2>
+					
+					<form method="post" action="" enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								{{ form.as_p }}
+							</div>
+						</div>
+						
+						<br>
+						<input type="submit" class="btn btn-primary" value="Valider">
+					</form>
+				</section>
 			</section>
 		</div>
 	</section>
+	<br>
+	<br>
 	
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html>
 <head>
     {% load static %}
-	<title>Pomme - se connecter</title>
+	<title>Erreur de droits</title>
 
 	<html lang="fr">
 	<meta charset="UTF-8">
@@ -17,25 +17,15 @@
 
 	<div class="container d-flex align-items-center flex-column">
 		<img src={% static "Logo-APHP.jpg" %}>
-
-			<form class="form-login" action="" method="POST">
-				{% csrf_token %}
-					<div class="form-group">
-						<label for="username">E-mail</label>
-						<input id="username" class="form-control" type="text" name="username">
-					</div>
-					<div class="form-group">
-						<label for="password">Mot de passe</label>
-						<input id="password" class="form-control" type="password" name="password">
-					</div>
-				
-				<br>
-				<p style="text-align: center;"><input type="submit" class="btn btn-primary" value="Se connecter"></p>
-			</form>
-			<img id="epocrate_logo" src={% static "logo_e-pocrate.png"%}>
+		
+		<h1 style="margin-top: 60px; margin-bottom: 30px;">Vous n'avez pas les droits pour accéder à cette page</h1>
+		<button class="btn btn-primary" onclick="javascript:history.go(-1)">
+			Retourner à la page précédente
+		</button>
+			
+		<img id="epocrate_logo" src={% static "logo_e-pocrate.png"%}>
 
 		</div>
-		<!-- christelle.crystal@yopmail.com Abcdefg98@ -->
 </section>
 </body>
 </html>

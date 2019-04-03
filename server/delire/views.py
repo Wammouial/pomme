@@ -113,6 +113,7 @@ def formPersonnel(request): #formulaire patient
 	return render(request, 'formulairepersonnel.html', {'form' : form})
 
 @login_required
+@rightsRequired(1, 2)
 def modifierPatient(request, idPersonne): #formulaire patient
 	b = BDD()
 	identite = b.getPersonne(idPersonne)
@@ -193,6 +194,7 @@ def modifierPersonnel(request, idPersonne): #formulaire patient
 	return render(request, 'formulairemodifpersonnel.html', {'mod' : mod})
 
 @login_required
+@rightsRequired(1, 2, 4)
 def recherchePatient(request):
 	formu = RechercheFormPatient(request.GET)
 
@@ -250,7 +252,7 @@ def recherchePatient(request):
 	return render(request, 'recherchepatient.html', locals())
 
 @login_required
-@rightsRequired(2)
+@rightsRequired(1, 2)
 def recherchePersonnel(request):
 	formu = RechercheFormPersonnel(request.GET)
 	affiliation1 = "Secrétaire"

@@ -83,7 +83,7 @@
 										<li>{% if ordo.fichier %}<span class="caret">{% endif %}{{ ordo.nom }} du {{ ordo.getDate }}
 											{% if ordo.fichier %}
 											<ul class="nested">
-												<li><a href="{% url 'editDoc' ordo.id %}"><img src="{{ ordo.getB64 }}"/></a></li> <!-- img -->
+												<li><img class="img-fluid" src="{{ ordo.getB64 }}"/></li> <!-- img -->
 											</ul>
 										
 											{% endif %}
@@ -98,7 +98,7 @@
 										<li>{% if diagno.fichier %}<span class="caret">{% endif %}{{ diagno.nom }} du {{ diagno.getDate }}
 											{% if diagno.fichier %}
 											<ul class="nested">
-												<li><a href="{% url 'editDoc' diagno.id %}"><img src="{{ diagno.getB64 }}"/></a></li> <!-- img -->
+												<li><img class="img-fluid" src="{{ diagno.getB64 }}"/></li> <!-- img -->
 											</ul>
 											{% endif %}
 										</li>

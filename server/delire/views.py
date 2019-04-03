@@ -345,7 +345,7 @@ def afficheDocuments(request, pid=""):
 			fichier = Document.imgToB64(fichier)
 			
 			doc = b.createDocument(nom=nom, typeDoc=typeDoc, date=date, brouillon=brouillon, fichier=fichier, proprietaire=personne)
-			return redirect("editDoc", doc.id)
+			return render(request, 'dmp.html', locals())
 		
 		else:
 			print(form.errors.as_data())
